@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div role="main" class="wtop wtop-i">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgg"><img src="{{portrait}}" class="imgp"></div></div></a>
+        </div>
+        <div class="ui-content ui-max">
+            <div class="content-container">
+                <ion-item>
+                    <ion-label>Unité</ion-label>
+                    <ion-select [(ngModel)]="metrique" (ionChange)="onChangeMetrique($event, metrique)">
+                        <ion-option value="m" selected="true">Système métrique</ion-option>
+                        <ion-option value="i">Système impérial </ion-option>
+                    </ion-select>
+                </ion-item>
+                 <ion-item>
+                    <ion-label>Fond de carte</ion-label>
+                    <ion-select [(ngModel)]="carte" (ionChange)="onChangeCarte($event, carte)">
+                        <ion-option value="esri" selected="true">ESRI</ion-option>
+                        <ion-option value="ign">IGN</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Raccourcis vers les topos enregistrés</ion-label>
+                    <ion-checkbox color="wf" checked="true" [(ngModel)]="ltoposhl" (ionChange)="toposHlEvent(ltoposhl)"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Taille du cache ({{cachesize}})</ion-label>
+                    <button ion-button="" item-right="" outline="" (click)="clearCache()">Vider</button>
+                </ion-item>
+                 <ion-item>
+                    <ion-label>Mode debug</ion-label>
+                    <ion-checkbox color="wf" checked="true" [(ngModel)]="debugmode" (ionChange)="onChangeDebugmode(debugmode)"></ion-checkbox>
+                </ion-item>
+            </div>
+        </div>
+    </div>
+</ion-content>

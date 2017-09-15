@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button (click)='dismiss(null,null)'>
+            <ion-icon name="close"></ion-icon>
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+    <ion-searchbar (keyup)="getItems($event)" [(ngModel)]="search" color="wf" placeholder="Recherche"></ion-searchbar>
+</ion-header>
+<ion-content>
+    <ion-title *ngIf="routes.length > 0">Résultat de la recherche</ion-title>
+        <ion-list>
+        <button ion-item *ngFor="let p of routes" (click)="itemSelectedOnLine(p)">
+            <ion-avatar item-left>
+                <span class="activity icon-{{p.activities[0]}}"></span>
+            </ion-avatar>
+            <ng-container *ngIf="p.locales[0].title_prefix != null">{{p.locales[0].title_prefix}} : </ng-container> {{p.locales[0].title}}
+        </button>  
+    </ion-list>
+    
+    
+    <ion-title>Choix du topos</ion-title>
+    
+    
+    <p *ngIf="routes_off.length == 0" class="toposhl">Aucun topos n'est disponible hors ligne.</p>
+    <ion-list>
+        <button ion-item *ngFor="let p of routes_off" (click)="itemSelected(p)">
+            <ion-avatar item-left>
+                <span class="activity icon-{{p.activities[0]}}"></span>
+            </ion-avatar>
+            <ng-container *ngIf="p.locales[0].title_prefix != null">{{p.locales[0].title_prefix}} : </ng-container> {{p.locales[0].title}}
+        </button>  
+    </ion-list>
+</ion-content>

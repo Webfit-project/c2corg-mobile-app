@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="title-top-list">{{nbwaypoints}} Point<ng-container *ngIf="nbwaypoints>0">s</ng-container></div>
+            <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+            <div class="cards-bg" *ngFor="let p of waypoints">
+                <ion-card (click)="gotoPage(p.document_id)">
+                    <ion-card-content>
+                        <ion-card-title>
+                           {{p.locales[0].title}}
+                        </ion-card-title>
+                        <p>
+                            {{p.locales[0].summary}}
+                        </p>
+                    </ion-card-content>
+
+                    <ion-row no-padding>
+                          <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+                                {{typetostr(p.waypoint_type)}}
+                            </button>
+                        </ion-col>
+                           <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-sort-by-attributes rotate-180 cg"></span>
+                                {{p.elevation}}
+                            </button>
+                        </ion-col>
+                        <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-map-marker cg"></span>
+                                {{p.areas[p.areas.length-1].locales[0].title}}
+                            </button>
+                        </ion-col>
+                     
+                     
+                    </ion-row>
+
+                </ion-card>
+
+            </div>
+</ion-content>

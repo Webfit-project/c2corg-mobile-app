@@ -1,0 +1,20 @@
+<ion-menu [content]="content">
+  <ion-header>
+         <div class="menu_portrait f5">
+                <a class="menu_portrait"><img alt="" src="{{portraitm}}" class="cercle imgp"></a>
+            </div>
+    <ion-toolbar>
+      <ion-title>{{name}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+        <div *ngFor="let p of pages"> 
+      <button menuClose ion-item (tap)="openPage(p)">
+          <span class="{{p.icon}}"></span> {{p.title}} 
+      </button><a *ngIf="p.info" class="pull-right" menuClose (tap)="openPageShop()"><span class="co glyphicon glyphicon-info-sign"></span></a></div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

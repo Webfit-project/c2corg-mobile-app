@@ -1,0 +1,220 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content color="grey">
+    <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+    <div class="btreload" *ngIf="btreload" (click)="reloadRoute()">Recharger la sortie</div>
+    <div [ngSwitch]="topos" *ngIf="loader == false && btreload == false">
+        
+        <div *ngSwitchCase="'list'">
+            
+            <ion-title><ng-container *ngIf="title_prefix != null">{{title_prefix}} : </ng-container> {{title}}</ion-title>
+            <div class="subtitle">{{datetostr(date_start)}}</div>
+            <ion-card class="imgbg" (click)="gotoSlide()" *ngIf="images.length > 0">
+                <img src="https://media.camptocamp.org/c2corg_active/{{images[0].filename}}" />
+                <div class="main-title card-title"></div>
+                <div class="card-subtitle">{{images.length}} photo<ng-container *ngIf="images.length > 1">s</ng-container></div>
+            </ion-card>
+            
+            
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33 class="general">Général</ion-col><ion-col width-66>
+                    <div class="infoline" *ngIf="activities != null"><span class="title">Activités:</span><br /><span *ngFor="let ac of activities" class="activity icon-{{ac}} info"></span></div>
+                    <div class="infoline" *ngIf="frequentation != null"><span class="title">Fréquentation:</span> <span>{{frequentationtostr(frequentation)}}</span></div>
+                    <div class="infoline" *ngIf="condition_rating != null"><span class="title">Évaluation des conditions:</span> <span>{{datatostr(condition_rating)}}</span></div>
+                    <div class="infoline" *ngIf="partial_trip"><span class="title">Parcours partiel:</span> <span>Oui</span></div>
+                    <div class="infoline"><span class="title">Complétude:</span> <span>{{qualitytostr(quality)}}</span></div>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col width-33>Participants</ion-col><ion-col width-66>
+                    <div class="infoline" *ngIf="participant_count != null"><span class="title">Nombre de participant:</span> <span>{{participant_count}}</span></div>
+                    <span *ngFor="let u of users">&nbsp;{{u.name}}</span><span>&nbsp;{{participants}}</span>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row *ngIf="elevation_min != null || elevation_max != null || height_diff_up != null || height_diff_down != null || length_total != null">
+                    <ion-col width-33>Altitudes</ion-col><ion-col width-66>
+                    <ion-row *ngIf="elevation_min != null || elevation_max != null"><span class="title">Altitude min/max:</span> <span>&nbsp;{{elevation_min}} / {{elevation_max}}</span></ion-row>
+                    <ion-row *ngIf="height_diff_up != null || height_diff_down != null"><span class="title">Dénivelé:</span> <span>&nbsp;+{{height_diff_up}} / -{{height_diff_down}}</span></ion-row>
+                    <ion-row *ngIf="length_total != null && length_total != 0"><span class="title">Longueur totale:</span> <span>&nbsp;{{length_total}}</span></ion-row>
+
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row *ngIf="public_transport || access_condition != null || lift_access || hut_status != null">
+                    <ion-col width-33>Accès</ion-col><ion-col width-66>
+                    <ion-row *ngIf="public_transport"><span class="title">Sortie en mobilité douce:</span> <span>&nbsp;Oui</span></ion-row>
+                    <ion-row *ngIf="access_condition != null"><span class="title">Conditions de l'accès:</span> <span>&nbsp;{{access_conditiontostr(access_condition)}}</span></ion-row>
+                    
+                    <ion-row *ngIf="lift_status != null"><span class="title">Remontée mécanique:</span> <span>&nbsp;{{lift_statustostr(lift_status)}}</span></ion-row>
+
+                    <ion-row *ngIf="hut_status != null"><span class="title">Refuge:</span> <span>&nbsp;{{hut_statustostr(hut_status)}}</span></ion-row>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row *ngIf="elevation_up_snow != null || elevation_down_snow != null || snow_quantity != null || snow_quality != null || glacier_rating != null || avalanche_signs.length > 0">
+                    <ion-col width-33>Neige</ion-col><ion-col width-66>
+                    <div class="infoline"><span class="title">Altitude de chaussage:</span> <span>{{elevation_up_snow}}</span></div>
+                    <div class="infoline"><span class="title">Altitude de déchaussage:</span> <span>{{elevation_down_snow}}</span></div>
+                    <div class="infoline" *ngIf="snow_quantity != null"><span class="title">Quantité de neige:</span> <span>{{datatostr(snow_quantity)}}</span></div>
+                    <div class="infoline" *ngIf="snow_quality != null"><span class="title">Qualité de la neige:</span> <span>{{datatostr(snow_quality)}}</span></div>
+                    <div class="infoline" *ngIf="glacier_rating != null"><span class="title">Etat du glacier:</span> <span>{{glacier_ratingtostr(glacier_rating)}}</span></div>
+                    <div class="infoline" *ngIf="avalanche_signs.length > 0"><span class="title">Signes d'avalanche: </span> <span *ngFor="let av of avalanche_signs">&nbsp;{{avalanche_signstostr(av)}}</span></div>
+                    </ion-col>
+                </ion-row>
+
+
+            </ion-grid>                
+            
+            <ion-card>
+                <ion-card-header>
+                    Description de l'itinéraire
+                </ion-card-header>
+                <ion-card-content>
+                    <summary class="document-summary" *ngIf="summary != null">
+                        <label><span>Résumé</span></label><br>
+                        <p>{{summary}}</p>
+                    </summary>
+                    <markdown [data]="route_description"></markdown>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="weather != '' || conditions != ''">
+                <ion-card-header>
+                    Conditions et météo
+                </ion-card-header>
+                <ion-card-content>
+                    <h4>Météo</h4>
+                    <markdown [data]="weather"></markdown>
+                    <h4>Conditions</h4>
+
+                    <markdown [data]="conditions"></markdown>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="avalanches != ''">
+                <ion-card-header>
+                    Observations relatives aux avalanches
+                </ion-card-header>
+                <ion-card-content>
+                    <markdown [data]="avalanches"></markdown>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="timing != ''">
+                <ion-card-header>
+                    Durée
+                </ion-card-header>
+                <ion-card-content>
+                    <markdown [data]="timing"></markdown>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="access_comment != ''">
+                <ion-card-header>
+                    Commentaires sur l'accès
+                </ion-card-header>
+                <ion-card-content>
+                    <markdown [data]="access_comment"></markdown>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="hut_comment != ''">
+                <ion-card-header>
+                    Commentaires sur le refuge
+                </ion-card-header>
+                <ion-card-content>
+                    <markdown [data]="hut_comment"></markdown>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="description != ''">
+                <ion-card-header>
+                    Commentaires personnels
+                </ion-card-header>
+                <ion-card-content>
+                    <markdown [data]="description"></markdown>
+                </ion-card-content>
+            </ion-card>
+
+        </div>
+         <div *ngSwitchCase="'list2'">
+            <ion-item-group class="associated_document">
+                <ion-item-divider color="light" *ngIf="routes.length > 0">Itineraire</ion-item-divider>
+                <div class="cards-bg" *ngFor="let p of routes">
+                    <ion-card (click)="gotoRoute(p.document_id)">
+                        <ion-card-content>
+                            <ion-card-title>
+                                {{p.locales[p.idlg].title_prefix}} : {{p.locales[p.idlg].title}}
+                            </ion-card-title>
+                            <p *ngIf="p.locales[p.idlg].summary != null && p.locales[p.idlg].summary != ''">
+                                {{p.locales[p.idlg].summary}}
+                            </p>
+                        </ion-card-content>
+                        <ion-row no-padding>
+
+                            <ion-col *ngIf="p.elevation_max != null">
+                                <button ion-button clear small icon-left>
+                                    <span class="glyphicon glyphicon-sort-by-attributes rotate-180 cg"></span>
+                                    {{GlobalService.unit(p.elevation_max)}}
+                                </button>
+                            </ion-col> 
+                            <ion-col *ngIf="p.height_diff_up != null">
+                                <button ion-button clear small icon-left>
+                                    <span class="inf icon-height_diff cg"></span>
+                                    {{GlobalService.unit(p.height_diff_up)}}
+                                </button>
+                            </ion-col>
+
+                            <ion-col *ngIf="p.orientations != null">
+                                <button ion-button clear small icon-left>
+                                    <span class="glyphicon glyphicon-fullscreen cg"></span>
+                                    <span *ngFor="let o of p.orientations; let i = index"><ng-container *ngIf="i>0">,</ng-container>{{o}} </span>
+                                </button>
+                            </ion-col>
+                            <ion-col *ngIf="p.via_ferrata_rating != null || p.engagement_rating || p.equipment_rating || p.global_rating || p.rock_free_rating ||p.rock_required_rating || p.aid_rating ||p.ice_rating || p.mixed_rating || p.risk_rating || p.exposition_rock_rating || p.ski_rating || p.ski_exposition ||p.labande_global_rating ||p.hiking_rating ||p.snowshoe_rating ||p.mtb_up_rating ||p.mtb_down_rating || p.hiking_mtb_exposition">
+                                <button ion-button clear small icon-left>
+                                    <span class="inf icon-rating cg"></span>
+                                    <p>{{p.global_rating}} {{p.rock_free_rating}}<ng-container *ngIf="rock_free_rating != null && rock_required_rating != null">&gt;</ng-container>{{p.rock_required_rating}} {{p.aid_rating}} {{p.ice_rating}} {{p.mixed_rating}} {{p.via_ferrata_rating}}  {{p.engagement_rating}} {{p.risk_rating}}  {{p.equipment_rating}}  {{p.exposition_rock_rating}} {{p.ski_rating}}<ng-container *ngIf="ski_rating != null && ski_exposition!= null">/</ng-container>{{p.ski_exposition}} {{p.labande_global_rating}}<ng-container *ngIf="labande_global_rating != null && labande_ski_rating!= null">/</ng-container>{{p.labande_ski_rating}} {{p.hiking_rating}} {{p.snowshoe_rating}} {{p.mtb_up_rating}} {{p.mtb_down_rating}} {{p.hiking_mtb_exposition}}</p>
+                                </button>
+                            </ion-col>
+
+                            <ion-col *ngIf="p.areas != null && p.areas != ''">
+                                <button ion-button clear small icon-left>
+                                    <span class="glyphicon glyphicon-map-marker cg"></span>
+                                    {{p.areas[p.areas.length-1].locales[0].title}}
+                                </button>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding>
+                            <ion-col>
+                                <button ion-button clear small icon-left ><span *ngFor="let a of p.activities" class="activity icon-{{a}}"></span></button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-card>
+                </div>
+               
+            </ion-item-group>
+        </div>
+        <div *ngSwitchCase="'map'">
+            map
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="topos">
+            <ion-segment-button value="list">
+                Sortie
+            </ion-segment-button>
+            <ion-segment-button value="list2">
+                Document associé
+            </ion-segment-button>
+            <ion-segment-button value="list" class="nocolor" (click)='showMap()'>
+                Voir la carte
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

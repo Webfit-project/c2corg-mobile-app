@@ -1,0 +1,32 @@
+page-modalconditionlevel ion-content ion-title {
+    text-align: center;
+    padding: 20px 0;
+   
+}
+
+page-modalconditionlevel .button-md, page-modalconditionlevel .button-md.activated {
+        float: left;
+    background: transparent;
+    box-shadow: none;
+    font-size: 1.4em;
+    padding: 0 0.9em;
+}
+
+page-modalconditionlevel .label-md[stacked] {
+    font-size: 18px;
+}
+
+
+page-modalconditionlevel .boxsave {
+    width: 100%;
+    padding: 20px;
+}
+page-modalconditionlevel .btsave {
+    width: 100%;
+
+    background: rgba(169, 211, 97, 1);
+ 
+    text-align: center;
+    padding: 8px 0 6px 0;
+    font-size: 27px;
+}

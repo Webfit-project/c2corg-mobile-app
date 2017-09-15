@@ -1,0 +1,51 @@
+
+page-notebook  .segment-md .segment-button.activated,page-notebook .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-notebook .segment-md .segment-button {
+    border: 0px;
+    color: inherit;
+}
+
+page-notebook .content-md {
+    background: #eee;
+}
+
+page-notebook .list-md .item-block .item-inner {
+    border-bottom: none;
+}
+page-notebook .list-md ion-item {
+    border-bottom: 1px solid #dedede;
+
+    width:100% ;
+}
+
+page-notebook .list-md ion-item  .label-md {  white-space: normal; }
+
+page-notebook .item-md ion-avatar[item-left], page-notebook .item-md ion-thumbnail[item-left] {
+    padding: 8px 16px 8px 0;
+    font-size: 26px;
+    margin: 0px;
+    color: #a9d361;
+}
+
+page-notebook .item-md ion-thumbnail {
+    min-width: 20px;
+    min-height: 20px;
+
+}
+
+page-notebook .noresult {
+    text-align: center;
+    padding: 20px;
+    font-size: 15px;
+}
+
+
+page-notebook .btnol {
+        padding: 10px 0 20px 0;
+}
+
+

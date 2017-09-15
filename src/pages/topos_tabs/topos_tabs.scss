@@ -1,0 +1,176 @@
+.tabs-md .tab-button[aria-selected=true]
+{
+    color: #FFAA45;
+}
+.searchbar-md-wf {
+    background: rgba(255,170,69,0.95)
+
+}
+.searchbar-md .searchbar-input {
+    box-shadow: none;
+}
+
+page-topos-tabs .content-md {
+    background: #eee;
+}
+page-topos-tabs .ploader{
+    padding: 20px 0;
+    text-align: center;
+}
+.post .parent-info {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+
+.post .infoa .parent-title .under-title .title {
+    margin-left: 0px;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: hidden;
+}
+page-topos-tabs .card-content-md {
+    padding: 13px 16px 0px 16px;
+}
+.post .parent-info  {
+    margin-top: 10px;
+}
+.post .parent-info .line-info {
+    position: relative;
+    display: flex;
+
+    width: 100%;
+    overflow: hidden;
+    padding: 5px 10px;
+}
+
+
+.post .parent-info .line-info  .parent-bubble {
+    color: #FFAA45;
+
+}
+.post .parent-info .line-info .text-bubble
+{
+    padding: 9px 5px;
+}
+
+.title-top-list {
+    background-color: #eeeeee;
+    text-align: center;
+    padding: 20px 20px 10px 20px;
+    color: #858585;
+    font-size: 25px;
+}
+
+page-topos-tabs .btreload {
+    text-align: center;
+    padding: 20px;
+    font-size: 15px;
+}
+page-topos-tabs .route-activity.glyphicon {
+    color: #fff;
+    font-size:35px;
+} 
+
+page-topos-tabs .bgg {
+    background: #a9d361;
+}
+
+page-topos-tabs .segment-md .segment-button.segment-activated.noactivated {
+    color: inherit;
+    opacity: 0.7;
+}
+page-topos-tabs .segment-md .segment-button.activated,page-topos-tabs .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-topos-tabs  .segment-md .segment-button {
+    border: 0px;
+    color: inherit;
+}
+
+page-topos-tabs .fab-md {
+    box-shadow: none;
+}
+page-topos-tabs .fab-close-active {
+    background: #a9d361;
+    color: #fff;
+}
+page-topos-tabs .fab .button-inner{
+
+    color: #fff;
+}
+page-topos-tabs .fab .button-inner [class^="route-activity icon-"]  {
+    color: #a9d361;
+    font-size: 4.5em;
+}
+
+page-topos-tabs .fab-in-list .button-inner [class^="activity icon-"]  {
+    color: #FFAA45;
+    font-size: 3.2em;
+}
+page-topos-tabs .fab-md-in-list {
+    background-color: #fff;
+}
+.labelContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+page-topos-tabs  ion-toolbar { border-top: 1px solid #eee; }
+
+page-topos-tabs .btfilter {
+        background: #a9d361;
+    color: #fff;
+    right: 10px;
+    top: 10px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    text-align: center;
+    margin-top: -3px;
+}
+
+page-topos-tabs .btfilter span { 
+    line-height: 56px; 
+    font-size: 2.4em;
+}
+page-topos-tabs ion-fab {margin-top: -3px;}
+
+.orientation-svg path {
+    fill: #a9a9a9;
+}
+.orientation-svg text {
+    fill: #fff;
+}
+.orientation-svg path.orientation-selected {
+    fill: #A9D361;
+}
+
+page-topos-tabs .cards-bg .button-clear-md span {
+    color: #777;
+    text-transform: none;
+}
+page-topos-tabs .cards-bg .button-clear-md span.activity {
+    color: #FFAA45;
+    font-size: 35px;
+    margin-right: 5px;
+}
+
+page-topos-tabs .cards-bg  .button-small-md {
+    height: auto;
+}
+page-topos-tabs .cards-bg .button-clear-md span.cg { color:#A9D361; font-size: 22px;    margin-right: 10px; }
+.orientation-svg path {
+    fill: #a9a9a9;
+}
+
+page-topos-tabs .btnadd {
+    font-size: 2.5rem;
+}

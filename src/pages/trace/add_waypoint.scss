@@ -1,0 +1,152 @@
+page-add-waypoint ion-content ion-title {
+    text-align: center;
+    padding: 20px 0;
+}
+page-add-waypoint .boxsave {
+    width: 100%;
+    padding: 20px;
+}
+page-add-waypoint .btsave {
+    width: 100%;
+
+    background: rgba(169, 211, 97, 1);
+ 
+    text-align: center;
+    padding: 8px 0 6px 0;
+    font-size: 27px;
+}
+
+page-add-waypoint .label-md[stacked] {
+    font-size: 18px;
+}
+
+page-add-waypoint .item-block {
+    margin-bottom: 10px;
+        
+}
+
+page-add-waypoint .input-has-focus .label-md[stacked] {
+    color: rgba(169, 211, 97, 1);
+}
+page-add-waypoint .btright { font-size: 20px;}
+page-add-waypoint .item-md {
+    padding: 0 16px;
+}
+
+page-add-waypoint .item-md.item-input.input-has-focus .item-inner {
+    border-bottom-color: rgba(169, 211, 97, 1);
+    box-shadow: inset 0  -1px  0 0 rgba(169, 211, 97, 1);
+}
+
+page-add-waypoint .input-need-data .label-md[stacked] {
+    color: #e1484f;
+}
+
+page-add-waypoint .item-md.item-input.input-need-data .item-inner {
+    border-bottom-color: #e1484f;
+    box-shadow: inset 0  -1px  0 0 #e1484f;
+}
+
+page-add-waypoint .item-md ion-avatar[item-left], page-add-waypoint .item-md ion-thumbnail[item-left] {
+      padding: 8px 16px 8px 0;
+    font-size: 26px;
+    margin: 0px;
+ /*   border-bottom: 1px solid #dedede; */
+    color: rgba(255, 170, 69, 0.95);
+}
+
+page-add-waypoint .item-md ion-thumbnail {
+      min-width: 20px;
+    min-height: 20px;
+    
+}
+
+page-add-waypoint .list-md > .item-block:last-child .item-inner,page-add-waypoint  .list-md > .item-wrapper:last-child ion-label
+{
+    border-bottom: 1px solid #dedede;
+}
+
+page-add-waypoint .remove.button-clear-md {
+    color: #e1484f
+}
+
+page-add-waypoint .ploader , page-add-waypoint .ploadergos{
+    padding: 20px 0;
+    text-align: center;
+}
+page-add-waypoint .gpsresearch, page-add-waypoint .gpsstopresearch {
+    text-align:center;
+}
+
+page-add-waypoint .gpsstopresearch {
+    color: #387ef5;
+}
+
+page-add-waypoint  .list-md .item-block .item-inner {
+    border-bottom: none;
+}
+page-add-waypoint  .list-md ion-item {
+        border-bottom: 1px solid #dedede;
+    
+margin: 0 16px 10px 16px;
+    padding: 0px;
+    width: calc(100% - 32px);
+}
+
+page-add-waypoint  .list-md ion-item  .label-md {  white-space: normal; }
+
+page-add-waypoint .toolbar-background-md {
+    background: #A9D361;
+}
+
+page-add-waypoint .segment-md .segment-button.segment-activated.noactivated {
+    color: #fff;
+    opacity: 1;
+}
+page-add-waypoint .segment-md .segment-button.activated, page-add-waypoint .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #fff;
+    opacity: 1;
+}
+
+page-add-waypoint .segment-md .segment-button {
+    border: 0px;
+    opacity: 1;
+    color: #fff;
+}
+
+page-add-waypoint .btphoto { font-size: 30px;}
+page-add-waypoint .infoprec {
+    text-align:center;
+    margin-top:50px;
+}
+
+page-add-waypoint .pbadge {
+    text-align: center;
+    margin-top: 10px;
+}
+
+page-add-waypoint .cg {
+    background: #2cbe4e;
+    color:#fff;
+}
+
+page-add-waypoint .co {
+    
+    color:#fff;
+}
+
+page-add-waypoint .cob {
+    background: #ffa500;
+    color:#fff;
+}
+
+page-add-waypoint .cr {
+    background: #cb2431;
+    color:#fff;
+}
+
+page-add-waypoint .cu {
+    background: #666;
+    color:#fff;
+}

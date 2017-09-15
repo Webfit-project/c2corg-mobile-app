@@ -1,0 +1,88 @@
+page-waypoints .content-md {
+    background: #eee;
+}
+
+page-waypoints .ploader{
+    padding: 20px 0;
+    text-align: center;
+}
+
+.tabs-md .tab-button[aria-selected=true]
+{
+    color: #FFAA45;
+}
+
+
+
+page-waypoints .segment-md .segment-button.activated,page-waypoints .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-waypoints  .segment-md .segment-button {
+       border: 0px;
+    color: inherit;
+}
+
+page-waypoints .fab-md {
+    box-shadow: none;
+}
+page-waypoints .fab-close-active {
+    background: #a9d361;
+    color: #fff;
+}
+page-waypoints .fab .button-inner{
+    
+    color: #fff;
+}
+page-waypoints .fab .button-inner [class^="route-activity icon-"]  {
+color: #a9d361;
+    font-size: 4.5em;
+}
+
+page-waypoints .fab-in-list .button-inner [class^="activity icon-"]  {
+color: #FFAA45;
+    font-size: 3.2em;
+}
+page-waypoints .fab-md-in-list {
+    background-color: #fff;
+}
+.labelContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+page-waypoints ion-toolbar { border-top: 1px solid #eee; }
+
+page-waypointsion-fab {margin-top: -3px;}
+
+page-waypoints .cards-bg .button-clear-md span {
+    color: #777;
+    text-transform: none;
+}
+page-waypoints .cards-bg .button-clear-md span.waypoint-type {
+    color: #FFAA45;
+    font-size: 22px;
+        margin-right: 10px;
+}
+
+page-waypoints .cards-bg .button-clear-md span.cg { color:#A9D361; font-size: 22px;    margin-right: 10px; }
+.orientation-svg path {
+    fill: #a9a9a9;
+}
+.orientation-svg text {
+    fill: #fff;
+}
+.orientation-svg path.orientation-selected {
+    fill: #A9D361;
+}
+ion-infinite-scroll-content {
+    background: #eeeeee;
+}
+.cards-bg {
+    background: #eeeeee;
+    padding: 1px 0px;
+}
+

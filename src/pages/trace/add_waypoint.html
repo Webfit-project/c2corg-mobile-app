@@ -1,0 +1,166 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="getGpsData()">
+                <span class="btphoto glyphicon glyphicon-map-marker"></span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-title>Ajouter un point de passage</ion-title>
+    <ion-item [ngClass]="{'input-need-data': title_nd == true}">
+        <ion-label color="wf" stacked>Titre</ion-label>
+        <ion-input type="text" placeholder="Titre du point de passage" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Langue</ion-label>
+        <ion-select [(ngModel)]="lg">
+            <ion-option value="fr" selected="true">français</ion-option>
+            <ion-option value="it">Italien</ion-option>
+            <ion-option value="de">Allemand</ion-option>
+            <ion-option value="en">Anglais</ion-option>
+            <ion-option value="es">Espagnol</ion-option>
+            <ion-option value="ca">Catalan</ion-option>
+            <ion-option value="eu">Basque</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Type</ion-label>
+        <ion-select [(ngModel)]="type">
+            <ion-option value="summit" selected="true">Sommet</ion-option>
+            <ion-option value="pass">Col</ion-option>
+            <ion-option value="lake">Lac</ion-option>
+            <ion-option value="waterfall">Cascade</ion-option>
+            <ion-option value="locality">Lieu-dit</ion-option>
+            <ion-option value="bisse">bisse / béal</ion-option>
+            <ion-option value="canyon">Canyon</ion-option>
+            <ion-option value="access">Accès</ion-option>
+            <ion-option value="climbing_outdoor">Site d'escalade</ion-option>
+            <ion-option value="climbing_indoor">SAE</ion-option>
+            <ion-option value="hut">Refuge/cabane</ion-option>
+            <ion-option value="gite">Gîte</ion-option>
+            <ion-option value="shelter">Abri</ion-option>
+            <ion-option value="bivouac">Bivouac</ion-option>
+            <ion-option value="camp_site">Camping</ion-option>
+            <ion-option value="base_camp">Camp de base</ion-option>
+            <ion-option value="local_product">Produits locaux</ion-option>
+            <ion-option value="paragliding_takeoff">Décollage parapente</ion-option>
+            <ion-option value="paragliding_landing">Atterrissage parapente</ion-option>
+            <ion-option value="cave">Grotte</ion-option>
+            <ion-option value="waterpoint">Point d'eau/source</ion-option>
+            <ion-option value="weather_station">Station météo</ion-option>
+            <ion-option value="webcam">Webcam</ion-option>
+            <ion-option value="virtual">Virtuel</ion-option>
+            <ion-option value="misc">Divers</ion-option>
+        </ion-select>
+    </ion-item>
+    
+        <ion-item *ngIf="type == 'gite' || type == 'hut' || type == 'camp_site'" [ngClass]="{'input-need-data': custodianship_nd == true}">
+        <ion-label color="wf" stacked>Type</ion-label>
+        <ion-select [(ngModel)]="custodianship">
+            <ion-option value=""></ion-option>
+            <ion-option value="accessible_when_wardened" selected="true">ouvert en période de gardiennage</ion-option>
+            <ion-option value="always_accessible">toujours ouvert</ion-option>
+            <ion-option value="key_needed">clé nécessaire pour ouvrir</ion-option>
+            <ion-option value="no_warden">non gardé</ion-option>
+        </ion-select>
+    </ion-item>
+    
+    <ion-item *ngIf="type == 'webcam' || type == 'weather_station'" [ngClass]="{'input-need-data': url_nd == true}">
+        <ion-label color="wf" stacked>Url</ion-label>
+        <ion-input type="text" [(ngModel)]="url"></ion-input>
+    </ion-item>
+    
+        <ion-item [ngClass]="{'input-need-data': product_types_nd == true}" *ngIf="type == 'local_product'">
+        <ion-label color="wf" stacked>Type de produits locaux</ion-label>
+        <ion-select [(ngModel)]="product_types" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="farm_sale" selected="true">vente directe</ion-option>
+            <ion-option value="restaurant" selected="true">restaurant</ion-option>
+            <ion-option value="grocery" selected="true">épicerie</ion-option>
+            <ion-option value="bar" selected="true">bar</ion-option>
+            <ion-option value="sport_shop" selected="true">magasin de sport</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Complétude</ion-label>
+        <ion-select [(ngModel)]="quality">
+            <ion-option value="empty" selected="true">Vide</ion-option>
+            <ion-option value="draft">Ebauche</ion-option>
+            <ion-option value="medium">Moyen</ion-option>
+            <ion-option value="fine">Bon</ion-option>
+            <ion-option value="great">Excellent</ion-option>
+        </ion-select>
+    </ion-item>
+    <div class="ploadergos" *ngIf="loadergps"><ion-spinner></ion-spinner></div>
+    <p class="gpsresearch" *ngIf="loadergps">Recherche des meilleures coordonnées gps</p>
+    <p class="gpsstopresearch" *ngIf="loadergps" (click)="stopGps()">Arreter la recherche</p>
+    <div class="infoprec" >Estimation de la précision des coordonnées
+        <div class="pbadge">
+            <ion-badge class="cg" *ngIf="infoprec == 1">Excellente</ion-badge>
+            <ion-badge class="co" *ngIf="infoprec == 2">Acceptable</ion-badge>
+            <ion-badge class="cob" *ngIf="infoprec == 3">Moyenne</ion-badge>
+            <ion-badge class="cr" *ngIf="infoprec == 4">Mauvaise</ion-badge>
+            <ion-badge class="cu" *ngIf="infoprec == 0">Inconnus</ion-badge>
+        </div>
+    </div>
+
+    <ion-item [ngClass]="{'input-need-data': elevation_nd == true}">
+        <ion-label color="wf" stacked>Altitude</ion-label>
+        <ion-input type="text" placeholder="en mètre" [(ngModel)]="elevation"></ion-input>
+    </ion-item>
+    <ion-item [ngClass]="{'input-need-data': longitude_nd == true}">
+        <ion-label color="wf" stacked>Longitude</ion-label>
+        <ion-input type="text" placeholder="°E" [(ngModel)]="longitude"></ion-input>
+    </ion-item>
+    <ion-item [ngClass]="{'input-need-data': latitude_nd == true}">
+        <ion-label color="wf" stacked>Latitude</ion-label>
+        <ion-input type="text" placeholder="°N" [(ngModel)]="latitude"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Résumé</ion-label>
+        <ion-textarea [(ngModel)]="summary" name="summary" placeholder="Résumé" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Description</ion-label>
+        <ion-textarea [(ngModel)]="description" name="description" placeholder="Description" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Associer d'autres points</ion-label>
+        <ion-input type="text" placeholder="Rechercher..." [(ngModel)]="search" (keyup)="getItems($event)" (ionInput)="onInput($event)"></ion-input>
+    </ion-item>
+    <ion-list>
+        <ion-item *ngFor="let p of autocomplete"> <ion-thumbnail item-left>
+            <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+            </ion-thumbnail>{{p.locales[0].title}} <button class="add" ion-button clear item-right (click)="addWaypoint(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-item *ngFor="let p of wllist"> <ion-thumbnail item-left>
+            <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+            </ion-thumbnail>{{p.locales[0].title}} <button class="remove" ion-button clear item-right (click)="rmWaypoint(p)"><ion-icon name="remove"></ion-icon>
+            </button></ion-item>
+    </ion-list>
+    <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment>
+            <ion-segment-button (click)="saveDraft(true)" value="saveDraft">
+                <ion-icon name="archive"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button (click)="save()" value="save">
+                <ion-icon name="cloud-upload"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button>
+                <ion-icon name="trash" (click)="removeWaypoint(true)" value="remove"></ion-icon>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,125 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+          <ion-buttons end>
+            <button ion-button (click)="addWaypoint()" class="btnadd">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-searchbar (keyup)="getItems($event)" [(ngModel)]="search" color="wf" placeholder="Recherche"></ion-searchbar>
+
+</ion-header>
+
+<div class="labelContainer" *ngIf="showMenuItem"></div>
+<ion-content>
+
+    <div [ngSwitch]="proximity">
+        <div *ngSwitchCase="'list'">
+            <div class="title-top-list">{{nbwaypoints}} Point<ng-container *ngIf="nbwaypoints>0">s</ng-container></div>
+            <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+            <div class="noresult" *ngIf="errgps">Aucun signal gps.</div>
+            <div class="noresult" *ngIf="noresult">Aucun point de passage à proximité</div>
+              <div class="btreload" *ngIf="btreload" (click)="reloadWaypoints()">Recharger les points de passage</div>
+            <div class="cards-bg" *ngFor="let p of waypoints">
+                <ion-card (click)="gotoPage(p.document_id)">
+                    <ion-card-content>
+                        <ion-card-title>
+                           {{p.locales[0].title}}
+                        </ion-card-title>
+                        <p>
+                            {{p.locales[0].summary}}
+                        </p>
+                    </ion-card-content>
+
+                    <ion-row no-padding>
+                          <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+                                {{typetostr(p.waypoint_type)}}
+                            </button>
+                        </ion-col>
+                           <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-sort-by-attributes rotate-180 cg"></span>
+                                {{p.elevation}}
+                            </button>
+                        </ion-col>
+                        <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-map-marker cg"></span>
+                                {{p.areas[p.areas.length-1].locales[0].title}}
+                            </button>
+                        </ion-col>
+                     
+                     
+                    </ion-row>
+
+                </ion-card>
+
+            </div>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </div>
+        <div *ngSwitchCase="'offline'">
+            <div class="title-top-list">{{nbwaypoints_off}} Point<ng-container *ngIf="nbwaypoints_off>0">s</ng-container></div>
+            <div class="cards-bg" *ngFor="let p of waypoints_off">
+                <ion-card (click)="gotoPage(p.document_id)">
+                 <!--   <img src="assets/img/tmp/img3.jpg"/> -->
+                    <ion-card-content>
+                        <ion-card-title>
+                           {{p.locales[0].title}}
+                        </ion-card-title>
+                        <p>
+                            {{p.locales[0].summary}}
+                        </p>
+                    </ion-card-content>
+
+                    <ion-row no-padding>
+                          <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+                                {{typetostr(p.waypoint_type)}}
+                            </button>
+                        </ion-col>
+                           <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-sort-by-attributes rotate-180 cg"></span>
+                                {{p.elevation}}
+                            </button>
+                        </ion-col>
+                        <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-map-marker cg"></span>
+                                {{p.areas[p.areas.length-1].locales[0].title}}
+                            </button>
+                        </ion-col>
+                     
+                     
+                    </ion-row>
+
+                </ion-card>
+
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="proximity">
+            <ion-segment-button value="list">
+                Tous les points
+            </ion-segment-button>
+                   <ion-segment-button value="offline">
+                Points enregistré
+            </ion-segment-button>
+            <ion-segment-button value="list" (click)="showMap()" class="noactivated">
+                Voir la carte
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

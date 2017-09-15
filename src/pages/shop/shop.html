@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div role="main" class="wtop wtop-i">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgg"><img src="{{portrait}}" class="imgp"></div></div></a>
+        </div>
+        <div class="ui-content">
+            <ion-title>Webfitshop <br />partenaire de Camptocamp</ion-title>
+            <ion-grid class="mt20">
+                <ion-row>
+                    <ion-col width-50 class="center"><img src="assets/img/l.svg" class="logoc2c" /></ion-col>
+
+                    <ion-col width-50 class="center"><img src="assets/img/lwf.svg" class="logowf" /></ion-col>
+                </ion-row>
+            </ion-grid>
+            <div class="boxtxt">
+                <p class="justify">5% de vos achats sur <a href="#" (click)="openShop()">Webfitshop.com</a> seront reversés directement à l'association.</p>
+                <p class="justify">Pour les membres de Camptocamp, un bon de réduction permanent de 5% vous sera envoyé par email.</p>
+                <a href="#" class="btconnect bt bt-main bt-link ui-link" (click)="openShop()">Ouvrir la boutique</a>
+
+            </div>
+        </div>
+    </div>
+</ion-content>

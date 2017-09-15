@@ -1,0 +1,67 @@
+page-picture {
+    .imgtaked {
+        width: 80%;
+        margin: 0 auto;
+    }
+    .btsave {
+        width: 100%;
+        background: rgba(169, 211, 97, 1);
+        text-align: center;
+        padding: 8px 0 6px 0;
+        font-size: 27px;
+    }
+    .boxsave {
+        width: 100%;
+        padding: 20px;
+    }
+    .label-md[stacked] {
+        font-size: 18px;
+    }
+    .item-block {
+        margin-bottom: 10px;
+    }
+    .input-has-focus .label-md[stacked] {
+        color: rgba(169, 211, 97, 1);
+    }
+    .item-md {
+        padding: 0 16px;
+        &.item-input
+        {
+            &.input-has-focus .item-inner {
+                border-bottom-color: rgba(169, 211, 97, 1);
+                box-shadow: inset 0  -1px  0 0 rgba(169, 211, 97, 1);
+            }
+            &.input-need-data .item-inner {
+                border-bottom-color: #e1484f;
+                box-shadow: inset 0  -1px  0 0 #e1484f;
+            }
+        }
+
+        ion-avatar[item-left], ion-thumbnail[item-left] {
+            padding: 8px 16px 8px 0;
+            font-size: 26px;
+            margin: 0px;
+            border-bottom: 1px solid #dedede;
+            color: rgba(255, 170, 69, 0.95);
+        }
+
+        ion-thumbnail {
+            min-width: 20px;
+            min-height: 20px;
+
+        }
+    }
+
+    .input-need-data .label-md[stacked] {
+        color: #e1484f;
+    }
+
+    .list-md > .item-block:last-child .item-inner,  .list-md > .item-wrapper:last-child ion-label
+    {
+        border-bottom: 1px solid #dedede;
+    }
+    
+    .remove.button-clear-md {
+        color: #e1484f
+    }
+}

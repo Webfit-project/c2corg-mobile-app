@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="deleteImg(true)" class="btnadd" *ngIf="pictures.length > 0">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+     <h2 class="nopicture" *ngIf="pictures.length == 0">Aucune photo n'a été ajouté à ce document.</h2>
+    <ion-list>
+        <ion-item *ngFor="let p of pictures">
+            <ion-thumbnail item-left>
+                <img src="{{p.data.filename}}">
+            </ion-thumbnail>
+            <ion-label>
+           
+                <div>
+                    <h2>{{p.attribute.title}} - {{p.id_outing}}</h2>
+                    <p>{{p.attribute.categories}} - {{p.attribute.type}}</p>
+                </div>
+            </ion-label>
+
+            <ion-checkbox item-right (click)="togglePicture(p)"></ion-checkbox>
+        </ion-item>
+    </ion-list>
+    <div class="sendigok">
+        
+    </div>
+     <div class="boxsave" *ngIf="btclose">
+        <div class="bt btclose" (click)="close()">Fermer</div>
+    </div>
+
+    <div class="boxsave" *ngIf="btsave">
+        <div class="bt btsave" (click)="save()">Enregistrer</div>
+    </div>
+</ion-content>

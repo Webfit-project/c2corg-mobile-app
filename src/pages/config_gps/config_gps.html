@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+                <ion-buttons end>
+               <button ion-button (click)="razConfig()">
+                <span class="btraz glyphicon glyphicon-wrench"></span>
+            </button>
+            
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div role="main" class="wtop wtop-i">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgg"><img src="{{portrait}}" class="imgp"></div></div></a>
+        </div>
+        <div class="ui-content ui-max">
+            <div class="content-container">
+                <ion-item-divider color="light">Configuration du gps</ion-item-divider>
+                <ion-item-divider color="light">Seuil de précision minimale de l'enregistrement <ion-badge item-right [(ngModel)]="badge_precision" ngDefaultControl>{{badge_precision}} m</ion-badge></ion-item-divider>
+                <ion-item>
+                    <ion-range min="0" max="200" [(ngModel)]="precision" (ionChange)="itemChange('precision',precision)">
+                        <ion-icon range-left name="ios-flag-outline"></ion-icon>
+                        <ion-icon range-right name="ios-flag"></ion-icon>
+                    </ion-range>
+                </ion-item>
+                <ion-item-divider color="light">Distance minimale entre 2 coordonnées <ion-badge color="wf" item-right [(ngModel)]="badge_distanceFilter" ngDefaultControl>{{badge_distanceFilter}} m</ion-badge></ion-item-divider>
+                <ion-item>
+                    <ion-range min="1" max="100" step="1" color="wf" [(ngModel)]="distanceFilter" (ionChange)="itemChange('distanceFilter',distanceFilter)">
+                        <ion-icon range-left name="ios-resize-outline" color="wf"></ion-icon>
+                        <ion-icon range-right name="ios-resize" color="wf"></ion-icon>
+                    </ion-range>
+                </ion-item>
+
+                <ion-item-divider color="light">Fréquence d'enregistrement des coordonnées <ion-badge color="secondary" item-right [(ngModel)]="badge_frequency" ngDefaultControl>{{badge_frequency}} s</ion-badge></ion-item-divider>
+                <ion-item>
+                    <ion-range min="0" max="1800" step="20" color="secondary" [(ngModel)]="frequency" (ionChange)="itemChange('frequency',frequency)">
+                        <ion-icon range-left name="ios-pin-outline" color="secondary"></ion-icon>
+                        <ion-icon range-right name="ios-pin" color="secondary"></ion-icon>
+                    </ion-range>
+                </ion-item>
+                <ion-item-divider color="light">Batterie minimale requise <ion-badge color="danger" item-right [(ngModel)]="badge_battery" ngDefaultControl>{{badge_battery}} %</ion-badge></ion-item-divider>
+                <ion-item>
+                    <ion-range min="0" max="100" [(ngModel)]="battery" color="danger" (ionChange)="itemChange('battery',battery)">
+                        <ion-icon range-left  name="ios-battery-dead" color="danger"></ion-icon>
+                        <ion-icon range-right name="ios-battery-full" color="danger"></ion-icon>
+                    </ion-range>
+                </ion-item>
+            </div>
+        </div>
+    </div>
+</ion-content>

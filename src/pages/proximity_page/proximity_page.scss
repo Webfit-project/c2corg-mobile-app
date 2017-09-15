@@ -1,0 +1,180 @@
+page-proximity-page .segment-md .segment-button.activated,page-proximity-page .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-proximity-page .segment-md .segment-button {
+    border: 0px;
+    color: inherit;
+}
+
+page-proximity-page .fab-md {
+    box-shadow: none;
+}
+page-proximity-page .fab-close-active {
+    background: #a9d361;
+    color: #fff;
+}
+page-proximity-page .fab .button-inner{
+
+    color: #fff;
+}
+page-proximity-page .fab .button-inner [class^="route-activity icon-"]  {
+    color: #a9d361;
+    font-size: 4.5em;
+}
+
+page-proximity-page .fab-in-list .button-inner [class^="activity icon-"]  {
+    color: #FFAA45;
+    font-size: 3.2em;
+}
+page-proximity-page .fab-md-in-list {
+    background-color: #fff;
+}
+
+page-proximity-page .btreload {
+    text-align: center;
+    padding: 20px;
+    font-size: 15px;
+}
+
+page-proximity-page .col[width-33] {
+    flex-grow: 1;
+}
+page-proximity-page .col[width-66] {
+    flex-grow: 2;
+}
+.labelContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+page-proximity-page ion-toolbar { border-top: 1px solid #eee; }
+
+page-proximity-page .content-md {
+    background-color: #eeeeee;
+}
+page-proximity-page .card-md {
+    margin: 10px 0;
+    box-shadow: none;
+    width: 100%;
+}
+page-proximity-page ion-card-header {
+    background: #A9D361;
+
+}
+page-proximity-page .card-header-md {
+    padding: 10px;
+    color: #fff;
+}
+page-proximity-page ion-content .toolbar-title-md {
+    text-align: center;
+    padding: 20px;font-size: 2.5rem;
+    overflow: visible;
+    white-space: normal;
+}
+
+page-proximity-page .card-header-md + .card-content-md,page-proximity-page .card-md .item + .card-content-md {
+    padding-top: 13px;
+}
+
+
+
+page-proximity-page  ion-card.imgbg {
+    position: relative;
+    text-align: center;
+}
+
+page-proximity-page .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+}
+
+.card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+}
+
+page-proximity-page ion-grid {
+    padding: 0;
+    border-top: 2px solid $btmain;
+    border-bottom: 2px solid $btmain;
+}
+
+page-proximity-page ion-row {
+    background: #fff;
+    margin-bottom: 2px;
+}
+page-proximity-page ion-row:last-child {
+    margin: 0;
+} 
+
+.document-summary {
+    color: #626262;
+    border: 1px solid #D8D8D8;
+    border-left: .5em solid $btmain;
+    padding: 5px 15px 5px 15px;
+    background-color: rgba(168,168,168,.07);
+    margin: 10px 0 10px 0;
+    font-style: italic;
+}
+.document-summary label {
+    font-style: normal;
+    font-weight: bold;
+}
+
+page-proximity-page ion-grid .title {
+    font-weight: bold;
+}
+
+page-proximity-page .infoline {
+    margin-bottom: 5px;
+}
+
+page-proximity-page ion-grid ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+page-proximity-page ion-grid ul li:before {
+    content: "\e080";
+    font-family: 'Glyphicons Halflings';
+    font-size: 12px;
+    float: left;
+    margin-left: -17px;
+    color: #A9D361;
+}
+page-proximity-page ion-grid ul li {
+    margin-bottom: 5px;
+}
+
+page-proximity-page .ploader{
+    padding: 20px 0;
+    text-align: center;
+}
+page-proximity-page .btnol {
+        padding: 10px 0 20px 0;
+}
+page-proximity-page .button-md {
+    box-shadow: none;
+}
+
+page-proximity-page ion-grid .month { margin-right: 5px; }
+
+page-proximity-page .card-md h3 , page-proximity-page .card-md h2 {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+page-proximity-page .card-md h3 {
+    font-size: 1.3em;
+}

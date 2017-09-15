@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button (click)='dismiss(null,null)'>
+            <ion-icon name="close"></ion-icon>
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-title>Conditions d'enneigement par zones</ion-title>
+      <ion-item [ngClass]="{'input-need-data': level_place_nd == true}">
+        <ion-label color="wf" stacked>Situation / Altitude / Orientations</ion-label>
+        <ion-input type="text" [(ngModel)]="level_place"></ion-input>
+    </ion-item>
+        <ion-item [ngClass]="{'input-need-data': level_snow_height_soft_nd == true}">
+        <ion-label color="wf" stacked>Neige meuble (cm)</ion-label>
+        <ion-input type="text" [(ngModel)]="level_snow_height_soft"></ion-input>
+    </ion-item>
+    <ion-item [ngClass]="{'input-need-data': level_snow_height_total_nd == true}">
+        <ion-label color="wf" stacked>Epaisseur totale (cm)	</ion-label>
+        <ion-input type="text" [(ngModel)]="level_snow_height_total"></ion-input>
+    </ion-item>
+     <ion-item>
+        <ion-label color="wf" stacked>Commentaire</ion-label>
+        <ion-input type="text" [(ngModel)]="level_comment"></ion-input>
+    </ion-item>
+    <div class="boxsave">
+        <div class="bt btsave" (click)="save()">Ajouter</div>
+    </div>
+</ion-content>

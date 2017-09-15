@@ -1,0 +1,11 @@
+<ion-header>
+    <ion-navbar color="black">
+    </ion-navbar>
+</ion-header>
+<ion-content class="tutorial-page">
+    <ion-slides pager zoom="true">
+        <ion-slide *ngFor="let slide of slides">
+            <div class="swiper-zoom-container"><img [src]="'https://media.camptocamp.org/c2corg_active/'+slide.filename+''" class="slide-image" imageViewer/></div>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

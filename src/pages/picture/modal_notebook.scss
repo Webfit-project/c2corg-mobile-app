@@ -1,0 +1,38 @@
+page-modalnotebook  {
+
+    .btsave {
+        width: 100%;
+
+        background: rgba(169, 211, 97, 1);
+
+        text-align: center;
+        padding: 8px 0 6px 0;
+        font-size: 27px;
+    }
+    .nopicture{
+        text-align: center;
+        padding: 10px 0 0 0;
+        font-size: 15px;
+    }
+    .error {
+        color: #f53d3d;
+    }
+    .btclose {
+        width: 100%;
+
+        background: rgba(255,170,69,0.95);
+
+        text-align: center;
+        padding: 8px 0 6px 0;
+        font-size: 27px;
+    }
+
+    .boxsave {
+        width: 100%;
+        padding: 20px;
+    }
+    .btnadd {
+        font-size: 2.5rem;
+    }
+
+}

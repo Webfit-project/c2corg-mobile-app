@@ -1,0 +1,185 @@
+page-article .segment-md .segment-button.activated,page-article .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-article .segment-md .segment-button {
+    border: 0px;
+    color: inherit;
+}
+
+page-article .btreload {
+    text-align: center;
+    padding: 20px;
+    font-size: 15px;
+}
+page-article .col[width-33] {
+    flex-grow: 1;
+}
+page-article .col[width-66] {
+    flex-grow: 2;
+}
+.labelContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+page-article ion-toolbar { border-top: 1px solid #eee; }
+page-article em {
+        font-style: normal;
+}
+page-article .content-md {
+    background-color: #eeeeee;
+}
+page-article .card-md {
+    margin: 10px 0;
+    box-shadow: none;
+    width: 100%;
+}
+page-article ion-card-header {
+    background: #A9D361;
+
+}
+page-article .card-header-md {
+    padding: 10px;
+    color: #fff;
+}
+page-article ion-content .toolbar-title-md {
+    text-align: center;
+    padding: 20px;font-size: 2.5rem;
+    overflow: visible;
+    white-space: normal;
+}
+
+page-article .card-header-md + .card-content-md,page-article .card-md .item + .card-content-md {
+    padding-top: 13px;
+}
+page-article .general {
+    font-weight: bold;
+    font-size: 18px;
+}
+page-article .title-cotation {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 20px;
+} 
+page-article .description-cotation span {
+        text-align: center;
+    display: block;
+    font-size: 18px;
+    margin: 8px 0;
+    color: #387ef5;
+}
+page-article .description-cotation h1 {
+    font-size: 1.3em
+}
+page-article .description-cotation p {
+    text-align: justify;
+}
+
+page-article  ion-card.imgbg {
+    position: relative;
+    text-align: center;
+}
+
+
+
+page-article .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+}
+
+.card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+}
+
+page-article ion-grid {
+    padding: 0;
+    border-top: 2px solid $btmain;
+    border-bottom: 2px solid $btmain;
+}
+
+page-article ion-row {
+    background: #fff;
+    margin-bottom: 2px;
+}
+page-article ion-row:last-child {
+    margin: 0;
+} 
+
+.document-summary {
+    color: #626262;
+    border: 1px solid #D8D8D8;
+    border-left: .5em solid $btmain;
+    padding: 5px 15px 5px 15px;
+    background-color: rgba(168,168,168,.07);
+    margin: 10px 0 10px 0;
+    font-style: italic;
+}
+.document-summary label {
+    font-style: normal;
+    font-weight: bold;
+}
+
+page-article ion-grid .title {
+    font-weight: bold;
+}
+
+page-article .infoline {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+page-article ion-grid ul {
+    margin: 0px 0px 0px 10px;;
+    padding: 0px;
+    list-style: none;
+}
+page-article .info.activity {
+    font-size: 36px;
+    color: #a9d361;
+}
+page-article ion-grid ul li:before {
+    content: "\e080";
+    font-family: 'Glyphicons Halflings';
+    font-size: 12px;
+    float: left;
+    margin-left: -17px;
+    color: #A9D361;
+}
+page-article ion-grid ul li {
+    margin-bottom: 5px;
+}
+
+page-article .ploader{
+    padding: 20px 0;
+    text-align: center;
+}
+page-article .btnol {
+        padding: 10px 0 20px 0;
+}
+page-article .button-md {
+    box-shadow: none;
+}
+
+page-article .card-md h3 , page-article .card-md h2 {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+page-article .card-md h3 {
+    font-size: 1.3em;
+}
+page-article markdown {
+    text-align: justify;
+}

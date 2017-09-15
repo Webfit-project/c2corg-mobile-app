@@ -1,0 +1,8 @@
+page-forget .list-md .item-input:last-child {
+    border-bottom: none;
+}
+
+page-forget .list-md .item-input.input-has-focus:last-child {
+    border: 0px;
+    box-shadow: none;
+}

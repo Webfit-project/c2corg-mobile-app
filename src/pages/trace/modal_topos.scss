@@ -1,0 +1,41 @@
+page-modaltopos ion-content ion-title {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #dedede
+}
+
+page-modaltopos .button-md,page-modaltopos .button-md.activated {
+        float: left;
+    background: transparent;
+    box-shadow: none;
+    font-size: 1.4em;
+    padding: 0 0.9em;
+}
+page-modaltopos .activity {
+    font-size: 2.5em;
+    color: #a9d361;
+}
+
+page-modaltopos .item-md {
+    padding: 0;
+    border-bottom: 1px solid #dedede
+}
+
+page-modaltopos .item-md ion-avatar[item-left], page-modaltopos  .item-md ion-thumbnail[item-left] {
+    margin: 8px 16px 8px 16px;
+    
+}
+
+page-modaltopos .list-md .item-block .item-inner {
+    border-bottom: 0px;
+}
+
+page-modaltopos .toposhl {
+    text-align:center;
+    padding: 15px 0;
+    font-size: 1.3em;
+}
+
+page-modaltopos  .label-md {
+    white-space: normal;
+}  

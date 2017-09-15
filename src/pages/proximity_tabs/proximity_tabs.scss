@@ -1,0 +1,115 @@
+page-proximity-tabs .content-md {
+    background: #eee;
+}
+
+page-proximity-tabs .ploader{
+    padding: 20px 0;
+    text-align: center;
+}
+
+.tabs-md .tab-button[aria-selected=true]
+{
+    color: #FFAA45;
+}
+.searchbar-md-wf {
+    background: rgba(255,170,69,0.95)
+        
+}
+.searchbar-md .searchbar-input {
+    box-shadow: none;
+}
+
+page-proximity-tabs .card-content-md {
+    padding: 13px 16px 0px 16px;
+}
+.title-top-list {
+     background-color: #eeeeee;
+    text-align: center;
+    padding: 20px 20px 10px 20px;
+    color: #858585;
+    font-size: 25px;
+}
+page-proximity-tabs .btnadd {
+    font-size: 2.5rem;
+}
+page-proximity-tabs  .segment-md .segment-button.segment-activated.noactivated {
+  color: inherit;
+    opacity: 0.7;
+}
+page-proximity-tabs .btreload, page-proximity-tabs .noresult {
+    text-align: center;
+    padding: 20px;
+    font-size: 15px;
+}
+page-proximity-tabs .segment-md .segment-button.activated,page-proximity-tabs .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-proximity-tabs  .segment-md .segment-button {
+       border: 0px;
+    color: inherit;
+}
+
+page-proximity-tabs .fab-md {
+    box-shadow: none;
+}
+page-proximity-tabs .fab-close-active {
+    background: #a9d361;
+    color: #fff;
+}
+page-proximity-tabs .fab .button-inner{
+    
+    color: #fff;
+}
+page-proximity-tabs .fab .button-inner [class^="route-activity icon-"]  {
+color: #a9d361;
+    font-size: 4.5em;
+}
+
+page-proximity-tabs .fab-in-list .button-inner [class^="activity icon-"]  {
+color: #FFAA45;
+    font-size: 3.2em;
+}
+page-proximity-tabs .fab-md-in-list {
+    background-color: #fff;
+}
+.labelContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+page-proximity-tabs  ion-toolbar { border-top: 1px solid #eee; }
+
+page-proximity-tabs ion-fab {margin-top: -3px;}
+
+page-proximity-tabs .cards-bg .button-clear-md span {
+    color: #777;
+    text-transform: none;
+}
+page-proximity-tabs .cards-bg .button-clear-md span.waypoint-type {
+    color: #FFAA45;
+    font-size: 22px;
+        margin-right: 10px;
+}
+
+page-proximity-tabs .cards-bg .button-clear-md span.cg { color:#A9D361; font-size: 22px;    margin-right: 10px; }
+.orientation-svg path {
+    fill: #a9a9a9;
+}
+.orientation-svg text {
+    fill: #fff;
+}
+.orientation-svg path.orientation-selected {
+    fill: #A9D361;
+}
+ion-infinite-scroll-content {
+    background: #eeeeee;
+}
+.cards-bg {
+    background: #eeeeee;
+    padding: 1px 0px;
+}
+

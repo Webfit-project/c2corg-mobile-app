@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="addObject()" class="btnadd">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<div class="labelContainer" *ngIf="showMenuItem"></div>
+<ion-content>
+        <a class="apn" (click)="goUploadPicture()" *ngIf="nbimginwait > 0" ion-fixed>
+        <span class="glyphicon glyphicon-camera"></span>
+    </a>
+    <div [ngSwitch]="tab">
+        <div *ngSwitchCase="'outing'">
+            <div class="title-top-list">{{nbouting}} Sortie<ng-container *ngIf="nbouting>0">s</ng-container></div>
+            <div class="btnol" >
+                <button ion-button full (click)='addObject()'>Créer une sortie</button>
+            </div>
+            <div class="noresult" *ngIf="nbouting == 0">Aucune sortie dans le carnet de note.</div>
+            <ion-list>
+                <ion-item *ngFor="let p of outings ; let i = index;" (click)="addObject(i)"><ion-thumbnail item-left>
+                    <span class="waypoint-type icon-{{p.data.activities[0]}}"> </span>
+                    </ion-thumbnail> <ng-container *ngIf="p.data.locales[0].title != '' && p.data.locales[0].title != null">{{p.data.locales[0].title}}</ng-container> <ng-container *ngIf="p.data.locales[0].title == '' || p.data.locales[0].title == null">Brouillon du {{displayDate(p.date)}}</ng-container> <button ion-button clear item-right><ion-icon name="create"></ion-icon></button></ion-item>
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'waypoint'">
+            <div class="title-top-list">{{nbwaypoint}} Point<ng-container *ngIf="nbwaypoint>0">s</ng-container> de passage</div>
+            <div class="btnol" >
+                <button ion-button full (click)='addObject()'>Créer un point de passage</button>
+            </div>
+            <div class="noresult" *ngIf="nbwaypoint == 0">Aucun point de passage dans le carnet de note.</div>
+            <ion-list>           
+                <ion-item *ngFor="let p of waypoints ; let i = index;" (click)="addObject(i)"><ion-thumbnail item-left>
+                    <span class="waypoint-type icon-{{p.data.waypoint_type}}"> </span>
+                    </ion-thumbnail> <ng-container *ngIf="p.data.locales[0].title != '' && p.data.locales[0].title != null">{{p.data.locales[0].title}}</ng-container> <ng-container *ngIf="p.data.locales[0].title == '' || p.data.locales[0].title == null">Brouillon du {{displayDate(p.date)}}</ng-container> <button ion-button clear item-right><ion-icon name="create"></ion-icon></button></ion-item>
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'route'">
+            <div class="title-top-list">{{nbroute}} Itinéraire<ng-container *ngIf="nbroute>0">s</ng-container></div>
+            <div class="btnol" >
+                <button ion-button full (click)='addObject()'>Créer un itinéraire</button>
+            </div>
+            <div class="noresult" *ngIf="nbroute == 0">Aucune itinéraire dans le carnet de note.</div>
+            <ion-list>
+                <ion-item *ngFor="let p of routes ; let i = index;" (click)="addObject(i)"><ion-thumbnail item-left>
+                    <span class="waypoint-type icon-{{p.data.activities[0]}}"> </span>
+                    </ion-thumbnail> <ng-container *ngIf="p.data.locales[0].title != '' && p.data.locales[0].title != null">{{p.data.locales[0].title}}</ng-container> <ng-container *ngIf="p.data.locales[0].title == '' || p.data.locales[0].title == null">Brouillon du {{displayDate(p.date)}}</ng-container> <button ion-button clear item-right><ion-icon name="create"></ion-icon></button></ion-item>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="tab">
+            <ion-segment-button value="outing">
+                Sortie
+            </ion-segment-button>
+            <ion-segment-button value="waypoint">
+                Point de passage
+            </ion-segment-button>
+            <ion-segment-button value="route">
+                Itinéraire
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

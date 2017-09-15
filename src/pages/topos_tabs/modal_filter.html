@@ -1,0 +1,352 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="save()" class="btnadd">
+                <ion-icon name="checkmark"></ion-icon>
+            </button>
+            <button ion-button (click)="close()" class="btnadd">
+                <ion-icon name="close"></ion-icon>
+            </button>
+            <button ion-button (click)="raz()" class="btnadd">
+                  <span class="btraz glyphicon glyphicon-wrench"></span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-item-divider *ngIf="activity == 'slacklining'" color="light">Type de ligne</ion-item-divider>
+    <ion-item *ngIf="activity == 'slacklining'">
+        <ion-select [(ngModel)]="sltyp" multiple="true">
+            <ion-option selected value="">Choix du type de ligne</ion-option>
+            <ion-option value="slackline">Slackline</ion-option>              
+            <ion-option value="highline">Highline</ion-option>
+            <ion-option value="waterline">Waterline</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item-divider color="light">Altitude maximale<ion-badge item-right ngDefaultControl>{{rmaxa.lower}} m</ion-badge> <ion-badge item-right ngDefaultControl>{{rmaxa.upper}} m</ion-badge></ion-item-divider>
+    <ion-item>
+        <ion-range dualKnobs="true" min="0" max="8850" [(ngModel)]="rmaxa" (ionChange)="itemChange('rmaxa',rmaxa)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>8850</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'skitouring'" color="light">Cotation ski<ion-badge item-right ngDefaultControl [(ngModel)]="badge_trat" color="wf">{{badge_trat.lower}}</ion-badge> <ion-badge item-right ngDefaultControl [(ngModel)]="badge_trat" color="wf">{{badge_trat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring'">
+        <ion-range dualKnobs="true" min="0" max="17" color="wf" [(ngModel)]="trat" (ionChange)="itemChange('trat',trat)">
+            <ion-label range-left>1.1</ion-label>
+            <ion-label range-right>5.6</ion-label>
+
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'skitouring'" color="light">Exposition ski<ion-badge item-right ngDefaultControl color="secondary">E{{sexpo.lower}}</ion-badge> <ion-badge item-right ngDefaultControl color="secondary">E{{sexpo.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring'">
+        <ion-range dualKnobs="true"  color="secondary" min="1" max="4" [(ngModel)]="sexpo" (ionChange)="itemChange('sexpo',sexpo)">
+            <ion-label range-left>E1</ion-label>
+            <ion-label range-right>E4</ion-label>
+
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'skitouring'" color="light">Cotation globale ski<ion-badge item-right ngDefaultControl color="danger">{{badge_lrat.lower}}</ion-badge> <ion-badge item-right ngDefaultControl color="danger">{{badge_lrat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring'">
+        <ion-range dualKnobs="true" min="0" max="20" color="danger" [(ngModel)]="lrat" (ionChange)="itemChange('lrat',lrat)">
+            <ion-label range-left>F</ion-label>
+            <ion-label range-right>ED7</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'skitouring'" color="light">Cotation ponctuelle ski<ion-badge color="green" item-right ngDefaultControl>S{{srat.lower}}</ion-badge><ion-badge color="green" item-right ngDefaultControl>S{{srat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring'">
+        <ion-range color="green" dualKnobs="true" min="1" max="7" [(ngModel)]="srat" (ionChange)="itemChange('srat',srat)">
+            <ion-label range-left>S1</ion-label>
+            <ion-label range-right>S7</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'rock_climbing'" color="light">Type de voie</ion-item-divider>
+    <ion-item *ngIf="activity == 'rock_climbing'">
+        <ion-select [(ngModel)]="crtyp" multiple="true">
+            <ion-option selected value="">Choix du type de voie</ion-option>
+            <ion-option value="bloc">Bloc</ion-option>              
+            <ion-option value="single">Couenne</ion-option>
+            <ion-option value="multi">Grande voie</ion-option>
+            <ion-option value="psicobloc">Psicobloc</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'rock_climbing'" color="light">Cotation libre<ion-badge  color="wf" item-right ngDefaultControl>{{badge_frat.lower}}</ion-badge> <ion-badge color="wf" item-right ngDefaultControl>{{badge_frat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'rock_climbing'">
+        <ion-range color="wf" dualKnobs="true" min="0" max="36" [(ngModel)]="frat" (ionChange)="itemChange('frat',frat)">
+            <ion-label range-left>2</ion-label>
+            <ion-label range-right>9c+</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'rock_climbing'" color="light">Cotation obligatoire<ion-badge color="secondary" item-right ngDefaultControl>{{badge_rrat.lower}}</ion-badge> <ion-badge color="secondary" item-right ngDefaultControl>{{badge_rrat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'rock_climbing'">
+        <ion-range color="secondary" dualKnobs="true" min="0" max="36" [(ngModel)]="rrat" (ionChange)="itemChange('rrat',rrat)">
+            <ion-label range-left>2</ion-label>
+            <ion-label range-right>9c+</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'rock_climbing'" color="light">Exposition rocher<ion-badge color="dark" item-right ngDefaultControl>E{{rexpo.lower}}</ion-badge> <ion-badge color="dark" item-right ngDefaultControl>E{{rexpo.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'rock_climbing'">
+        <ion-range dualKnobs="true" color="dark" min="1" max="6" [(ngModel)]="rexpo" (ionChange)="itemChange('rexpo',rexpo)">
+            <ion-label range-left>E1</ion-label>
+            <ion-label range-right>E6</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'rock_climbing'" color="light">Cotation artificielle<ion-badge item-right ngDefaultControl color="green">{{badge_arat.lower}}</ion-badge> <ion-badge color="green" item-right ngDefaultControl>{{badge_arat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'rock_climbing'">
+        <ion-range color="green" dualKnobs="true" min="0" max="11" [(ngModel)]="arat" (ionChange)="itemChange('arat',arat)">
+            <ion-label range-left>A0</ion-label>
+            <ion-label range-right>A5+</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'snow_ice_mixed' || activity == 'rock_climbing' || activity == 'mountain_climbing' || activity == 'ice_climbing'" color="light">Cotation globale<ion-badge item-right ngDefaultControl>{{badge_grat.lower}}</ion-badge> <ion-badge item-right ngDefaultControl>{{badge_grat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'rock_climbing' || activity == 'mountain_climbing' || activity == 'ice_climbing'">
+        <ion-range dualKnobs="true" min="0" max="20" [(ngModel)]="grat" (ionChange)="itemChange('grat',grat)">
+            <ion-label range-left>F</ion-label>
+            <ion-label range-right>ED7</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'" color="light">Engagement<ion-badge color="wf" item-right ngDefaultControl>{{badge_erat.lower}}</ion-badge> <ion-badge color="wf" item-right ngDefaultControl>{{badge_erat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">
+        <ion-range color="wf" dualKnobs="true" min="1" max="6" [(ngModel)]="erat" (ionChange)="itemChange('erat',erat)">
+            <ion-label range-left>I</ion-label>
+            <ion-label range-right>VI</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">Risques objectifs<ion-badge color="secondary" item-right  ngDefaultControl>X{{orrat.lower}}</ion-badge><ion-badge color="secondary" item-right  ngDefaultControl>X{{orrat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">
+        <ion-range color="secondary" dualKnobs="true" min="1" max="5" [(ngModel)]="orrat" (ionChange)="itemChange('orrat',orrat)">
+            <ion-label range-left>X1</ion-label>
+            <ion-label range-right>X5</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">Qualité de l'équipement<ion-badge color="danger" item-right ngDefaultControl>{{badge_prat.lower}}</ion-badge><ion-badge color="danger" item-right ngDefaultControl>{{badge_prat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">
+        <ion-range color="danger" dualKnobs="true" min="0" max="7" [(ngModel)]="prat" (ionChange)="itemChange('prat',prat)">
+            <ion-label range-left>P1</ion-label>
+            <ion-label range-right>P4+</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">Altitude du début des difficultés<ion-badge color="green" item-right ngDefaultControl>{{ralt.lower}} m</ion-badge><ion-badge color="green" item-right ngDefaultControl>{{ralt.upper}} m</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">
+        <ion-range color="green" dualKnobs="true" min="0" max="6000" [(ngModel)]="ralt" (ionChange)="itemChange('ralt',ralt)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>6000</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">Dénivelé de l'approche<ion-badge color="dark" item-right ngDefaultControl>{{rappr.lower}} m</ion-badge><ion-badge color="dark" item-right ngDefaultControl>{{rappr.upper}} m</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">
+        <ion-range color="dark" dualKnobs="true" min="0" max="3000" [(ngModel)]="rappr" (ionChange)="itemChange('rappr',rappr)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>3000</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'" color="light">Dénivelé des difficultés<ion-badge item-right ngDefaultControl>{{dhei.lower}} m</ion-badge><ion-badge item-right ngDefaultControl>{{dhei.upper}} m</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing'">
+        <ion-range dualKnobs="true" min="0" max="3000" [(ngModel)]="dhei" (ionChange)="itemChange('dhei',dhei)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>3000</ion-label>
+        </ion-range>
+    </ion-item>
+
+    <ion-item-divider color="light" *ngIf="activity == 'snow_ice_mixed' || activity == 'ice_climbing'">Cotation glace<ion-badge color="wf" item-right ngDefaultControl>{{badge_irat.lower}}</ion-badge><ion-badge color="wf" item-right ngDefaultControl>{{badge_irat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'ice_climbing'">
+        <ion-range color="wf" dualKnobs="true" min="1" max="12" [(ngModel)]="irat" (ionChange)="itemChange('irat',irat)">
+            <ion-label range-left>1</ion-label>
+            <ion-label range-right>7+</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'snow_ice_mixed' || activity == 'ice_climbing'">Cotation mixte<ion-badge color="secondary" item-right ngDefaultControl>{{badge_mrat.lower}}</ion-badge> <ion-badge color="secondary" item-right ngDefaultControl>{{badge_mrat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snow_ice_mixed' || activity == 'ice_climbing'">
+        <ion-range color="secondary" dualKnobs="true" min="1" max="22" [(ngModel)]="mrat" (ionChange)="itemChange('mrat',mrat)">
+            <ion-label range-left>M1</ion-label>
+            <ion-label range-right>M12+</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'via_ferrata'">Cotation via ferrata<ion-badge color="danger" item-right ngDefaultControl>K{{krat.lower}}</ion-badge> <ion-badge color="danger" item-right ngDefaultControl>K{{krat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'via_ferrata'">
+        <ion-range color="danger" dualKnobs="true" min="1" max="6" [(ngModel)]="krat" (ionChange)="itemChange('krat',krat)">
+            <ion-label range-left>K1</ion-label>
+            <ion-label range-right>K6</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'hiking'" color="light">Cotation randonnée/trail<ion-badge color="green" item-right ngDefaultControl>T{{hrat.lower}}</ion-badge><ion-badge color="green" item-right ngDefaultControl>T{{hrat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'hiking'">
+        <ion-range color="green" dualKnobs="true" min="1" max="5" [(ngModel)]="hrat" (ionChange)="itemChange('hrat',hrat)">
+            <ion-label range-left>T1</ion-label>
+            <ion-label range-right>T5</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'snowshoeing'" color="light">Cotation raquette<ion-badge color="dark" item-right ngDefaultControl>R{{wrat.lower}}</ion-badge><ion-badge color="dark" item-right ngDefaultControl>R{{wrat.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'snowshoeing'">
+        <ion-range color="dark" dualKnobs="true" min="1" max="5" [(ngModel)]="wrat" (ionChange)="itemChange('wrat',wrat)">
+            <ion-label range-left>R1</ion-label>
+            <ion-label range-right>R5</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'mountain_biking'" color="light">Cotation VTT montée<ion-badge item-right ngDefaultControl>M{{mbur.lower}}</ion-badge><ion-badge item-right ngDefaultControl>M{{mbur.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'mountain_biking'">
+        <ion-range dualKnobs="true" min="1" max="5" [(ngModel)]="mbur" (ionChange)="itemChange('mbur',mbur)">
+            <ion-label range-left>M1</ion-label>
+            <ion-label range-right>M5</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'mountain_biking'" color="light">Cotation VTT descente<ion-badge color="wf" item-right ngDefaultControl>V{{mbdr.lower}}</ion-badge><ion-badge color="wf" item-right ngDefaultControl>V{{mbdr.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'mountain_biking'">
+        <ion-range color="wf" dualKnobs="true" min="1" max="5" [(ngModel)]="mbdr" (ionChange)="itemChange('mbdr',mbdr)">
+            <ion-label range-left>V1</ion-label>
+            <ion-label range-right>V5</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'mountain_biking'" color="light">Distance goudronnée<ion-badge color="secondary" item-right ngDefaultControl>{{mbroad.lower}} m</ion-badge><ion-badge color="secondary" item-right ngDefaultControl>{{mbroad.upper}} m</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'mountain_biking'">
+        <ion-range color="secondary" dualKnobs="true" min="0" max="50000" [(ngModel)]="mbroad" (ionChange)="itemChange('mbroad',mbroad)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>50000</ion-label>
+        </ion-range>
+    </ion-item>
+
+    <ion-item-divider *ngIf="activity == 'mountain_biking'" color="light">Distance sur sentier<ion-badge color="danger" item-right ngDefaultControl>{{mbtrack.lower}} m</ion-badge><ion-badge color="danger" item-right ngDefaultControl>{{mbtrack.upper}} m</ion-badge></ion-item-divider>
+    <ion-item dualKnobs="true" *ngIf="activity == 'mountain_biking'">
+        <ion-range color="danger" dualKnobs="true" min="0" max="50000" [(ngModel)]="mbtrack" (ionChange)="itemChange('mbtrack',mbtrack)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>50000</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'mountain_biking'" color="light">Portage VTT<ion-badge color="green" item-right ngDefaultControl>{{mbpush.lower}} m</ion-badge> <ion-badge color="green" item-right ngDefaultControl>{{mbpush.upper}} m</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'mountain_biking'">
+        <ion-range color="green" dualKnobs="true" min="0" max="5000" [(ngModel)]="mbpush" (ionChange)="itemChange('mbpush',mbpush)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>5000</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'hiking' || activity == 'moutain_biking'" color="light">Exposition randonnée, trail et VTT<ion-badge color="dark" item-right ngDefaultControl>E{{hexpo.lower}}</ion-badge><ion-badge color="dark" item-right ngDefaultControl>E{{hexpo.upper}}</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'hiking' || activity == 'moutain_biking'">
+        <ion-range color="dark" min="1" max="4" [(ngModel)]="hexpo" (ionChange)="itemChange('hexpo',hexpo)">
+            <ion-label range-left>E1</ion-label>
+            <ion-label range-right>E4</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light">Altitude minimale<ion-badge color="wf" item-right ngDefaultControl>{{rmina.lower}} m</ion-badge> <ion-badge color="wf" item-right ngDefaultControl>{{rmina.upper}} m</ion-badge></ion-item-divider>
+    <ion-item>
+        <ion-range color="wf" dualKnobs="true" min="0" max="6000" [(ngModel)]="rmina" (ionChange)="itemChange('rmina',rmina)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>6000</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light">Dénivelé positif<ion-badge color="wf" item-right ngDefaultControl>{{hdif.lower}} m</ion-badge><ion-badge color="wf" item-right ngDefaultControl>{{hdif.upper}} m</ion-badge></ion-item-divider>
+    <ion-item>
+        <ion-range color="wf" dualKnobs="true" min="0" max="10000" [(ngModel)]="hdif" (ionChange)="itemChange('hdif',hdif)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>10000</ion-label>
+        </ion-range>
+    </ion-item>
+
+    <ion-item-divider color="light">Dénivelé negatif<ion-badge color="secondary" item-right ngDefaultControl>{{ddif.lower}} m</ion-badge><ion-badge color="secondary" item-right ngDefaultControl>{{ddif.upper}} m</ion-badge></ion-item-divider>
+    <ion-item>
+        <ion-range color="secondary" dualKnobs="true" min="0" max="10000" [(ngModel)]="ddif" (ionChange)="itemChange('ddif',ddif)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>10000</ion-label>
+        </ion-range>
+    </ion-item> 
+    <ion-item-divider color="light">Durée<ion-badge color="danger" item-right ngDefaultControl>{{badge_time.lower}}</ion-badge><ion-badge color="danger" item-right ngDefaultControl>{{badge_time.upper}}</ion-badge></ion-item-divider>
+    <ion-item>
+        <ion-range color="danger" dualKnobs="true" min="1" max="11" [(ngModel)]="time" (ionChange)="itemChange('time', time)">
+            <ion-label range-left>1 jours</ion-label>
+            <ion-label range-right>10+ jours</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light" *ngIf="activity == 'skitouring' || activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking' || activity == 'via_ferrata' || activity == 'slacklining'">Type d'itinéraire</ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring' || activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking' || activity == 'via_ferrata' || activity == 'slacklining'">
+        <ion-select [(ngModel)]="rtyp" multiple="true">
+            <ion-option selected value="">Choix du type d'itinéraire</ion-option>
+            <ion-option value="return_same_way">Aller-retour</ion-option>              
+            <ion-option value="loop">Boucle (pied de la voie)</ion-option>
+            <ion-option value="loop_hut">Boucle (approche ou refuge)</ion-option>
+            <ion-option value="traverse">Traversée</ion-option>
+            <ion-option value="raid">Raid</ion-option>
+            <ion-option value="expedition">Expédition</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item-divider color="light" *ngIf="activity == 'skitouring' || activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking' || activity == 'via_ferrata' || activity == 'slacklining'">Configuration</ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring' || activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking' || activity == 'via_ferrata' || activity == 'slacklining'">
+        <ion-select [(ngModel)]="conf" multiple="true">
+            <ion-option selected value="">Choix de la configuration</ion-option>
+            <ion-option value="edge">Arête</ion-option>              
+            <ion-option value="pillar">Pilier</ion-option>
+            <ion-option value="face">Face</ion-option>
+            <ion-option value="corridor">Couloir</ion-option>
+            <ion-option value="goulotte">Goulotte</ion-option>
+            <ion-option value="glacier">Glacier</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item-divider color="light" *ngIf="activity == 'skitouring' || activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking' || activity == 'via_ferrata'">Matériel glacier</ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring' || activity == 'snow_ice_mixed' || activity == 'mountain_climbing' || activity == 'rock_climbing' || activity == 'ice_climbing' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking' || activity == 'via_ferrata'">
+        <ion-select [(ngModel)]="glac" multiple="true">
+            <ion-option selected value="">Choix du matériel</ion-option>
+            <ion-option value="no">Non</ion-option>              
+            <ion-option value="glacier_safety_gear">Matériel de sécurité sur glacier</ion-option>
+            <ion-option value="crampons_spring">Crampons en début de saison</ion-option>
+            <ion-option value="crampons_req">Crampons indispensables</ion-option>
+            <ion-option value="glacier_crampons">Crampons + matériel de sécurité sur glacier</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item-divider *ngIf="activity == 'skitouring' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking'" color="light">Longueur de l'itinéraire<ion-badge color="green" item-right ngDefaultControl>{{rlen.lower}} m</ion-badge><ion-badge color="green" item-right ngDefaultControl>{{rlen.upper}} m</ion-badge></ion-item-divider>
+    <ion-item *ngIf="activity == 'skitouring' || activity == 'hiking' || activity == 'snowshoeing' || activity == 'moutain_biking'">
+        <ion-range color="green" dualKnobs="true" min="0" max="100000" [(ngModel)]="rlen" (ionChange)="itemChange('rlen',rlen)">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>100 km</ion-label>
+        </ion-range>
+    </ion-item>
+    <ion-item-divider color="light">Langue</ion-item-divider>
+    <ion-item>
+        <ion-select [(ngModel)]="lg" multiple="true">
+            <ion-option selected value="">Choix des langues</ion-option>
+            <ion-option value="fr">Français</ion-option>              
+            <ion-option value="it">Italien</ion-option>
+            <ion-option value="de">Allemand</ion-option>
+            <ion-option value="en">Anglais</ion-option>
+            <ion-option value="es">Espagnol</ion-option>
+            <ion-option value="ca">Catalan</ion-option>
+            <ion-option value="eu">Basque</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item-divider *ngIf="activity == 'rock_climbing'" color="light">Type de rocher</ion-item-divider>
+    <ion-item *ngIf="activity == 'rock_climbing'" >
+        <ion-select [(ngModel)]="rock" multiple="true">
+            <ion-option selected value="">Choix des rochers</ion-option>
+            <ion-option value="basalte">Basalte</ion-option>
+            <ion-option value="calcaire">Calcaire</ion-option>              
+            <ion-option value="conglomerat">Conglomérat</ion-option>
+            <ion-option value="craie">Craie</ion-option>
+            <ion-option value="gneiss">Gneiss</ion-option>
+            <ion-option value="gres">Grès</ion-option>
+            <ion-option value="granit">Granit</ion-option>
+            <ion-option value="migmatite">Migmatite</ion-option>
+            <ion-option value="mollasse_calcaire">Molasse</ion-option>
+            <ion-option value="pouding">Pouding</ion-option>
+            <ion-option value="quartzite">Quartzite</ion-option>
+            <ion-option value="rhyolite">Rhyolite</ion-option>
+            <ion-option value="schiste">Schiste</ion-option>
+            <ion-option value="trachyte">Trachyte</ion-option>
+            <ion-option value="artificial">Artificiel</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item-divider color="light">Complétude<ion-badge item-right ngDefaultControl>{{badge_qa.lower}}</ion-badge> <ion-badge item-right ngDefaultControl>{{badge_qa.upper}}</ion-badge></ion-item-divider>
+    <ion-item>
+        <ion-range dualKnobs="true" min="0" max="4" [(ngModel)]="qa" (ionChange)="itemChange('qa',qa)">
+            <ion-label range-left>vide</ion-label>
+            <ion-label range-right>excellent</ion-label>
+        </ion-range>
+    </ion-item>
+    <div class="boxsave">
+        <div class="bt btsave" (click)="save()">Valider</div>
+    </div>
+</ion-content>

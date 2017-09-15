@@ -1,0 +1,242 @@
+page-trace .content-md {
+    background: #fff url(../assets/img/f/f4.png) 0px 0px no-repeat;
+    background-size: 100%;
+}
+
+page-trace .ui-content {
+    padding-top: 30px;
+}
+.sensor {text-align: left;}
+
+.sensor .icon-mesu {
+    color: #d1d1d1;
+    font-size: 36px;
+
+    position: relative;
+}
+.sensor .icon-mesu ion-icon {
+    position: absolute;
+    left: -50px;
+    top: -21px;
+
+}
+.sensor data {
+    display: inline-block;
+    min-width: 86px;
+
+}
+
+page-trace ion-row {
+    margin-top: 30px;
+}
+page-trace .fab.bgg .button-inner {
+    background: #a9d361; 
+}
+page-trace .bgg {
+    background: #a9d361;
+}
+page-trace .bgr {
+    background: #bdbfc1;
+
+}
+
+page-trace .ui-max {
+    background: #fff;
+
+}
+
+page-trace  .route-activity.glyphicon {
+    color: #fff;
+    font-size: 2.5em;
+} 
+page-trace .fab.bgo .button-inner {
+    background-color: #FFAA45;
+}
+page-trace .bgo
+{
+    background-color: #FFAA45;
+    font-size: 1.9em;
+    color: #f4f4f4;
+}
+
+
+.sensor data .number {
+    color: #5b5b5b;
+    font-family: league_gothicregular;
+    font-size: 35px;
+    display: block;
+}
+.sensor-main data {
+    text-align: center;
+}
+.sensor-main data .number {
+    color: #5b5b5b;
+    font-size: 55px;
+    font-family: league_gothicregular;
+    display: block;
+}
+.sensor-main data .desc {
+    color: #5b5b5b;
+    font-size: 16px;
+    text-align: center;
+    display: block;
+}
+
+
+
+.sensor data .unit {
+    color: #727272;
+    display: block;
+    text-align: left;
+    margin-top: -5px;
+}
+
+
+
+.btplay {
+    color: #fff;
+    text-align: center;
+    padding: 15px 33px;
+    font-size: 50px;
+}
+.btpause {
+    padding: 15px;
+}
+.center .sport {
+    width: 75px;
+    height: 75px;
+    background: #fff;
+    padding: 1px;
+    border-radius: 75px;
+    -webkit-border-radius: 75px;
+    position: absolute;
+    left: 83%;
+    margin-left: -40px;
+    top: -35px;
+    overflow: hidden;
+    z-index: 10;
+    font-size: 73px;
+}
+
+.center .stop {
+    width: 75px;
+    height: 75px;
+    background: #fff;
+    padding: 5px;
+    border-radius: 75px;
+    -webkit-border-radius: 75px;
+    position: absolute;
+    left: 17%;
+    margin-left: -38px;
+    top: -35px;
+    overflow: hidden;
+    z-index: 10;
+    font-size: 65px;
+}
+
+.center .stop div {
+    -webkit-border-radius: 65px;
+    padding: 15px 0;
+    font-size: 30px;
+    width: 65px;
+    height: 65px;
+    color: #fff;
+    text-align: center;
+}
+
+.labelContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+
+page-trace ion-fab {
+    left: 83%;
+    margin-left: -40px;
+    top: 105px;
+    padding: 5px;
+}
+page-trace .fab-md {
+    box-shadow: none;
+}
+page-trace .fab-close-active {
+    background: #a9d361;
+    color: #fff;
+}
+page-trace .fab .button-inner{
+    background:#f4f4f4;
+    color: #fff;
+}
+page-trace .fab-md-in-list {
+    background-color: #FFAA45;
+}
+page-trace .fab .button-inner [class^="route-activity icon-"]  {
+    color: #a9d361;
+    font-size: 73px;
+    background: #fff;
+}
+
+page-trace .fab-in-list .button-inner [class^="activity icon-"]  {
+    color: #FFAA45;
+    font-size: 3.6em;
+}
+
+page-trace .fab {
+    width: 65px;
+    height: 65px;
+}
+
+page-trace ion-fab-list .fab-md {
+    width: 43px;
+    height: 43px;
+    border-radius: 23px;
+    padding: 0px;
+
+}
+page-trace ion-fab-list[side=left] {
+    margin: 0 70px;
+}
+page-trace ion-fab-list {
+    min-width: 65px;
+    min-height: 65px;
+    margin: 70px 0;
+}
+page-trace .fab-in-list {
+    margin: 4px 0;
+}
+
+
+page-trace ion-fab-list[side=left] .fab-in-list, page-trace  ion-fab-list[side=right] .fab-in-list
+{
+    margin: 0 3px;
+}
+page-trace .fab-close-icon {
+    line-height: 65px;
+}
+
+page-trace .btphoto { font-size: 30px;}
+
+
+page-trace .segment-md .segment-button.segment-activated.noactivated {
+    color: inherit;
+        opacity: 1;
+   color: #FFAA45;
+}
+page-trace .segment-md .segment-button.activated,page-topos-tabs .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #FFAA45;
+}
+
+page-trace ion-toolbar {
+    border-top: 1px solid #eee;
+}
+
+page-trace  .segment-md .segment-button {
+    border: 0px;
+    color: inherit;
+     color: #FFAA45;
+        opacity: 1;
+}
+

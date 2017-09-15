@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content color="grey">
+    <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+    <div class="btreload" *ngIf="btreload" (click)="reloadArticle()">Recharger l'article</div>
+    <div *ngIf="loader == false && btreload == false">
+      
+            <ion-title>{{title}}</ion-title>
+            <ion-card class="imgbg" (click)="gotoSlide()" *ngIf="images.length > 0">
+                <img src="http://sos.exo.io/c2corg_demov6_active/{{images[0].filename}}" />
+                <div class="card-title"></div>
+                <div class="card-subtitle">{{images.length}} photo<ng-container *ngIf="images.length > 1">s</ng-container></div>
+            </ion-card>
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33 class="general">Général</ion-col><ion-col width-66>
+                    <div class="infoline" *ngIf="activities != null"><span class="title">Activités:</span><br /><span *ngFor="let ac of activities" class="activity icon-{{ac}} info"></span></div>
+                    <div class="infoline" *ngIf="categories != null"><span class="title">Catégories:</span> <span *ngFor="let ct of categories; let i=index"><ng-container *ngIf="i>0">,&nbsp;</ng-container>{{categorietostr(ct)}}</span></div>
+                    <div class="infoline"><span class="title">Type d'article:</span> <span>{{typetostr(type)}}</span></div>
+
+                    <div class="infoline"><span class="title">Complétude:</span> <span>{{qualitytostr(quality)}}</span></div>
+                    </ion-col>
+                </ion-row>
+                <ion-row >
+                    <ion-col width-33>Licence</ion-col><ion-col width-66>Creative commons
+                    </ion-col>
+                </ion-row>
+            </ion-grid>   
+            <ion-card>
+                <ion-card-header>
+                    Description
+                </ion-card-header>
+                <ion-card-content>
+                    <summary class="document-summary" *ngIf="summary != null">
+                        <label><span>Résumé</span></label><br>
+
+                        <p>{{summary}}</p>
+                    </summary>
+                    <markdown [data]="description"></markdown>
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+</ion-content>

@@ -1,0 +1,685 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-title *ngIf="idd == -1">Ajouter un itinéraire</ion-title>
+    <ion-title *ngIf="idd != -1">Modifier un itinéraire</ion-title>
+    <ion-card-header class="card-header card-header-md">Informations générales</ion-card-header>
+    <ion-item [ngClass]="{'input-need-data': title_nd == true}">
+        <ion-label color="wf" stacked>Titre</ion-label>
+        <ion-input type="text" placeholder="Titre de l'itinéraire" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Langue</ion-label>
+        <ion-select [(ngModel)]="lg">
+            <ion-option value="fr" selected="true">français</ion-option>
+            <ion-option value="it">Italien</ion-option>
+            <ion-option value="de">Allemand</ion-option>
+            <ion-option value="en">Anglais</ion-option>
+            <ion-option value="es">Espagnol</ion-option>
+            <ion-option value="ca">Catalan</ion-option>
+            <ion-option value="eu">Basque</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Complétude</ion-label>
+        <ion-select [(ngModel)]="quality">
+            <ion-option value="empty" selected="true">Vide</ion-option>
+            <ion-option value="draft">Ebauche</ion-option>
+            <ion-option value="medium">Moyen</ion-option>
+            <ion-option value="fine">Bon</ion-option>
+            <ion-option value="great">Excellent</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+        <ion-label color="wf" stacked>Associer d'autres itineraires</ion-label>
+        <ion-input type="text" placeholder="Rechercher..." [(ngModel)]="searchrt" (keyup)="getItemsRt($event)" (ionInput)="onInputRt($event)"></ion-input>
+    </ion-item>
+    <ion-list>
+        <ion-item *ngFor="let p of autocompletertol"><ion-thumbnail item-left>
+            <span class="glyphicon glyphicon-phone"> </span>
+            </ion-thumbnail>{{displayTitleRoute(p)}} <button class="add" ion-button clear item-right (click)="addRoute(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+        <ion-item *ngFor="let p of autocompletert">{{displayTitleRoute(p)}} <button class="add" ion-button clear item-right (click)="addRoute(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-item *ngFor="let p of rtlist">{{displayTitleRoute(p)}} <button class="remove" ion-button clear item-right (click)="rmRoute(p)"><ion-icon name="remove"></ion-icon>
+            </button></ion-item>
+    </ion-list>
+    <ion-item [ngClass]="{'input-need-data': wllist_nd == true}">
+        <ion-label color="wf" stacked>Associer d'autres points</ion-label>
+        <ion-input type="text" placeholder="Rechercher..." [(ngModel)]="searchwp" (keyup)="getItemsWp($event)" (ionInput)="onInputWp($event)"></ion-input>
+    </ion-item>
+    <ion-list>
+        <ion-item *ngFor="let p of autocompletewpol"> <ion-thumbnail item-left>
+            <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+            </ion-thumbnail>{{p.locales[0].title}} <button class="add" ion-button clear item-right (click)="addWaypoint(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+        <ion-item *ngFor="let p of autocompletewp"> <ion-thumbnail item-left>
+            <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+            </ion-thumbnail>{{p.locales[0].title}} <button class="add" ion-button clear item-right (click)="addWaypoint(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-item *ngFor="let p of wllist"> <ion-thumbnail item-left>
+            <span class="waypoint-type icon-{{p.waypoint_type}}"> </span>
+            </ion-thumbnail>{{p.locales[0].title}} <button class="btmwp" ion-button clear item-right [ngClass]="{'mainwp': main_waypoint_id == p.document_id}" (click)="mainWaypoint(p)"> <ion-icon name="flag"></ion-icon></button> <button class="remove" ion-button clear item-right (click)="rmWaypoint(p)"><ion-icon name="remove"></ion-icon>
+            </button></ion-item>
+    </ion-list>
+    <ion-card-header class="card-header card-header-md">Activités</ion-card-header>
+    <ion-item [ngClass]="{'input-need-data': activities_nd == true}">
+        <ion-label color="wf" stacked>Activités</ion-label>
+        <ion-select [(ngModel)]="activities" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="skitouring" selected="true">Ski,surf</ion-option>
+            <ion-option value="snow_ice_mixed">Neige, glace et mixte</ion-option>
+            <ion-option value="mountain_climbing">Rocher haute montagne</ion-option>
+            <ion-option value="rock_climbing">Escalade</ion-option>
+            <ion-option value="ice_climbing">Cascade de glace</ion-option>
+            <ion-option value="hiking">Randonnée / Trail</ion-option>
+            <ion-option value="snowshoeing">Raquette</ion-option>
+            <ion-option value="paragliding">Parapente</ion-option>
+            <ion-option value="mountain_biking">VTT</ion-option>
+            <ion-option value="via_ferrata">Via ferrata</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('rock_climbing') > -1">
+        <ion-label color="wf" stacked>Type de voie</ion-label>
+        <ion-select [(ngModel)]="climbing_outdoor_type">
+            <ion-option value="single">Couenne</ion-option>
+            <ion-option value="multi">Grande voie</ion-option>
+            <ion-option value="bloc">Bloc</ion-option>
+            <ion-option value="psicobloc">Psicobloc</ion-option>
+        </ion-select>
+    </ion-item>    
+
+    <ion-card-header class="card-header card-header-md">Configuration</ion-card-header>
+    <ion-item>
+        <ion-label color="wf" stacked>Orientation</ion-label>
+    </ion-item>
+    <ion-row class="center">
+        <ion-col><svg class="orientation-svg" xmlns="http://www.w3.org/2000/svg" width="150" height="150" version="1.1" viewBox="0 0 454.00715 454.00714">
+            <g>
+                <path class="ori-e" [ngClass]="{'orientation-selected': orientation.indexOf('E') > -1}" d="m370.28 168.82-142.14 58.18 142.14 58.185h0.005l83.722-58.185z" (click)="toggleOrientation('E')"></path>
+                <text class="text-e" y="247.58344" x="350" font-size="60" (click)="toggleOrientation('E')">E</text>
+            </g>
+            <g>
+                <path class="ori-w" [ngClass]="{'orientation-selected': orientation.indexOf('W') > -1}" d="m83.727 168.82 142.14 58.18-142.14 58.185h-0.0046l-83.725-58.18z" (click)="toggleOrientation('W')"></path>
+                <text class="text-w" y="247.58344" x="56" font-size="60" (click)="toggleOrientation('W')">W</text>
+            </g>
+            <g>
+                <path class="ori-s" [ngClass]="{'orientation-selected': orientation.indexOf('S') > -1}" d="m285.19 370.28-58.18-142.14-58.185 142.14v0.005l58.185 83.722z" (click)="toggleOrientation('S')"></path>
+                <text class="text-s" y="390.00714" x="206.10295" font-size="60" (click)="toggleOrientation('S')">S</text>
+            </g>
+            <g>
+                <path class="ori-n" [ngClass]="{'orientation-selected': orientation.indexOf('N') > -1}" d="m285.19 83.727-58.18 142.14-58.19-142.14v-0.005l58.19-83.725z" (click)="toggleOrientation('N')"></path>
+                <text class="text-n" y="105.007141" x="205.0424" font-size="60" (click)="toggleOrientation('N')">N</text>
+            </g>
+            <path class="ori-se" [ngClass]="{'orientation-selected': orientation.indexOf('SE') > -1}" d="m369.46 287.17-141.65-59.371 59.368 141.65 0.002 0.002 100.34 18.058z" (click)="toggleOrientation('SE')"></path>
+            <path class="ori-nw" [ngClass]="{'orientation-selected': orientation.indexOf('NW') > -1}" d="m166.83 84.55 59.371 141.65-141.65-59.368-0.0032-0.002l-18.058-100.34z" (click)="toggleOrientation('NW')"></path>
+            <path class="ori-sw" [ngClass]="{'orientation-selected': orientation.indexOf('SW') > -1}" d="m166.83 369.46 59.371-141.65-141.65 59.368-0.0032 0.002-18.058 100.34z" (click)="toggleOrientation('SW')"></path>
+            <path class="ori-ne" [ngClass]="{'orientation-selected': orientation.indexOf('NE') > -1}" d="m369.46 166.83-141.65 59.371 59.368-141.65 0.002-0.002 100.34-18.058z" (click)="toggleOrientation('NE')"></path>
+            </svg>
+        </ion-col>
+    </ion-row>
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1 || activities.indexOf('via_ferrata') > -1">
+        <ion-label color="wf" stacked>Type d'itinéraire</ion-label>
+        <ion-select [(ngModel)]="route_types" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="return_same_way">Aller-retour</ion-option>
+            <ion-option value="loop">Boucle</ion-option>
+            <ion-option value="loop_hut">Boucle (refuge)</ion-option>
+            <ion-option value="traverse">Traversée</ion-option>
+            <ion-option value="raid">raid</ion-option>
+            <ion-option value="expedition">expédition</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snow_ice_mixed') > -1
+                     || activities.indexOf('mountain_climbing') > -1  || activities.indexOf('rock_climbing') > -1
+                     || activities.indexOf('snowshoeing') > -1 || activities.indexOf('via_ferrata') > -1">
+        <ion-label color="wf" stacked>Configurations</ion-label>
+        <ion-select [(ngModel)]="configuration" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="edge">Arête</ion-option>
+            <ion-option value="pillar">Pilier</ion-option>
+            <ion-option value="face">Face</ion-option>
+            <ion-option value="corridor">Couloir</ion-option>
+            <ion-option value="goulotte">Goulotte</ion-option>
+            <ion-option value="glacier">Glacier</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1 || activities.indexOf('via_ferrata') > -1">
+        <ion-label color="wf" stacked>Type de rocher</ion-label>
+        <ion-select [(ngModel)]="rock_types" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="basalte">basalte</ion-option>
+            <ion-option value="calcaire">calcaire</ion-option>
+            <ion-option value="conglomerat">conglomérat</ion-option>
+            <ion-option value="craie">craie</ion-option>
+            <ion-option value="gneiss">gneiss</ion-option>
+            <ion-option value="gres">grès</ion-option>
+            <ion-option value="granit">granit</ion-option>
+            <ion-option value="migmatite">migmatite</ion-option>
+            <ion-option value="mollasse_calcaire">molasse</ion-option>
+            <ion-option value="pouding">pouding</ion-option>
+            <ion-option value="quartzite">quartzite</ion-option>
+            <ion-option value="rhyolite">rhyolite</ion-option>
+            <ion-option value="schiste">schiste</ion-option>
+            <ion-option value="trachyte">trachyte</ion-option>
+            <ion-option value="artificial">artificiel</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-card-header class="card-header card-header-md">Caractéristiques</ion-card-header>
+    <ion-item>
+        <ion-label color="wf" stacked>Altitude minimale</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_min"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Altitude maximale</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_max"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Dénivelé positif</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="height_diff_up"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Dénivelé négatif</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="height_diff_down"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Dénivelé de l'approche</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="height_diff_access"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Dénivelé des difficultés</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="height_diff_difficulties"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('via_ferrata') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('rock_climbing') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1">
+        <ion-label color="wf" stacked>Altitude du début des difficultés</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="difficulties_height"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('hiking') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('via_ferrata') > -1 || activities.indexOf('mountain_biking') > -1 || activities.indexOf('mountain_climbing') > -1">
+        <ion-label color="wf" stacked>Longueur de l'itinéraire</ion-label>
+        <ion-input type="number" placeholder="en km" [(ngModel)]="route_length"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('mountain_biking') > -1">
+        <ion-label color="wf" stacked>Distance goudronnée</ion-label>
+        <ion-input type="number" placeholder="en km" [(ngModel)]="mtb_length_asphalt"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('mountain_biking') > -1">
+        <ion-label color="wf" stacked>Distance sur sentier</ion-label>
+        <ion-input type="number" placeholder="en km" [(ngModel)]="mtb_length_trail"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('mountain_biking') > -1">
+        <ion-label color="wf" stacked>Portage VTT</ion-label>
+        <ion-input type="number" placeholder="en km" [(ngModel)]="mtb_height_diff_portages"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Durée (jours)</ion-label>
+        <ion-select [(ngModel)]="durations" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="1">1</ion-option>
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3">3</ion-option>
+            <ion-option value="4">4</ion-option>
+            <ion-option value="5">5</ion-option>
+            <ion-option value="6">6</ion-option>
+            <ion-option value="7">7</ion-option>
+            <ion-option value="8">8</ion-option>
+            <ion-option value="9">9</ion-option>
+            <ion-option value="10">10</ion-option>
+            <ion-option value="10+">10+</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Remontées mécaniques</ion-label>
+        <ion-select [(ngModel)]="lift_access">
+            <ion-option value="open" selected="true">Ouvertes</ion-option>
+            <ion-option value="closed">Fermées</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-card-header class="card-header card-header-md" *ngIf="activities.length > 0">Cotations</ion-card-header>
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1">
+        <ion-label color="wf" stacked>Cotation ski</ion-label>
+        <ion-select [(ngModel)]="ski_rating">
+            <ion-option value="1.1">1.1</ion-option>
+            <ion-option value="1.2">1.2</ion-option>
+            <ion-option value="1.3">1.3</ion-option>
+            <ion-option value="2.1">2.1</ion-option>
+            <ion-option value="2.2">2.2</ion-option>
+            <ion-option value="2.3">2.3</ion-option>
+            <ion-option value="3.1">3.1</ion-option>
+            <ion-option value="3.2">3.2</ion-option>
+            <ion-option value="3.3">3.3</ion-option>
+            <ion-option value="4.1">4.1</ion-option>
+            <ion-option value="4.2">4.2</ion-option>
+            <ion-option value="4.3">4.3</ion-option>
+            <ion-option value="5.1">5.1</ion-option>
+            <ion-option value="5.2">5.2</ion-option>
+            <ion-option value="5.3">5.3</ion-option>
+            <ion-option value="5.4">5.4</ion-option>
+            <ion-option value="5.5">5.5</ion-option>
+            <ion-option value="5.6">5.6</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1">
+        <ion-label color="wf" stacked>Cotation ponctuelle ski</ion-label>
+        <ion-select [(ngModel)]="labande_ski_rating">
+            <ion-option value="S1">S1</ion-option>
+            <ion-option value="S2">S2</ion-option>
+            <ion-option value="S3">S3</ion-option>
+            <ion-option value="S4">S4</ion-option>
+            <ion-option value="S5">S5</ion-option>
+            <ion-option value="S6">S6</ion-option>
+            <ion-option value="S7">S7</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1">
+        <ion-label color="wf" stacked>Cotation globale ski</ion-label>
+        <ion-select [(ngModel)]="labande_global_rating">
+            <ion-option value="F">F</ion-option>
+            <ion-option value="F+">F+</ion-option>
+            <ion-option value="PD-">PD-</ion-option>
+            <ion-option value="PD">PD</ion-option>
+            <ion-option value="PD+">PD+</ion-option>
+            <ion-option value="AD-">AD-</ion-option>
+            <ion-option value="AD">AD</ion-option>
+            <ion-option value="AD+">AD+</ion-option>
+            <ion-option value="D-">D-</ion-option>
+            <ion-option value="D">D</ion-option>
+            <ion-option value="D+">D+</ion-option>
+            <ion-option value="TD-">TD-</ion-option>
+            <ion-option value="TD">TD</ion-option>
+            <ion-option value="TD+">TD+</ion-option>
+            <ion-option value="ED-">ED-</ion-option>
+            <ion-option value="ED">ED</ion-option>
+            <ion-option value="ED+">ED+</ion-option>
+            <ion-option value="ED4">ED4</ion-option>
+            <ion-option value="ED5">ED5</ion-option>
+            <ion-option value="ED6">ED6</ion-option>
+            <ion-option value="ED7">ED7</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('snowshoeing') > -1">
+        <ion-label color="wf" stacked>Cotation raquette</ion-label>
+        <ion-select [(ngModel)]="snowshoe_rating">
+            <ion-option value="R1">R1</ion-option>
+            <ion-option value="R2">R2</ion-option>
+            <ion-option value="R3">R3</ion-option>
+            <ion-option value="R4">R4</ion-option>
+            <ion-option value="R5">R5</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1 || activities.indexOf('ice_climbing') > -1">
+        <ion-label color="wf" stacked>Cotation globale</ion-label>
+        <ion-select [(ngModel)]="global_rating">
+            <ion-option value="F">F</ion-option>
+            <ion-option value="F+">F+</ion-option>
+            <ion-option value="PD-">PD-</ion-option>
+            <ion-option value="PD">PD</ion-option>
+            <ion-option value="PD+">PD+</ion-option>
+            <ion-option value="AD-">AD-</ion-option>
+            <ion-option value="AD">AD</ion-option>
+            <ion-option value="AD+">AD+</ion-option>
+            <ion-option value="D-">D-</ion-option>
+            <ion-option value="D">D</ion-option>
+            <ion-option value="D+">D+</ion-option>
+            <ion-option value="TD-">TD-</ion-option>
+            <ion-option value="TD">TD</ion-option>
+            <ion-option value="TD+">TD+</ion-option>
+            <ion-option value="ED-">ED-</ion-option>
+            <ion-option value="ED">ED</ion-option>
+            <ion-option value="ED+">ED+</ion-option>
+            <ion-option value="ED4">ED4</ion-option>
+            <ion-option value="ED5">ED5</ion-option>
+            <ion-option value="ED6">ED6</ion-option>
+            <ion-option value="ED7">ED7</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1
+                     || activities.indexOf('ice_climbing') > -1 || activities.indexOf('via_ferrata') > -1">
+        <ion-label color="wf" stacked>Engagement</ion-label>
+        <ion-select [(ngModel)]="engagement_rating">
+            <ion-option value="I">I</ion-option>
+            <ion-option value="II">II</ion-option>
+            <ion-option value="III">III</ion-option>
+            <ion-option value="IV">IV</ion-option>
+            <ion-option value="V">V</ion-option>
+            <ion-option value="VI">VI</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('via_ferrata') > -1">
+        <ion-label color="wf" stacked>Qualité de l'équipement</ion-label>
+        <ion-select [(ngModel)]="equipment_rating">
+            <ion-option value="P1">P1</ion-option>
+            <ion-option value="P2">P2</ion-option>
+            <ion-option value="P2+">P2+</ion-option>
+            <ion-option value="P3">P3</ion-option>
+            <ion-option value="P3+">P3+</ion-option>
+            <ion-option value="P4">P4</ion-option>
+            <ion-option value="P4+">P4+</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('ice_climbing') > -1">
+        <ion-label color="wf" stacked>Cotation glace</ion-label>
+        <ion-select [(ngModel)]="ice_rating">
+            <ion-option value="1">1</ion-option>
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3">3</ion-option>
+            <ion-option value="3+">3+</ion-option>
+            <ion-option value="4">4</ion-option>
+            <ion-option value="4+">4+</ion-option>
+            <ion-option value="5">5</ion-option>
+            <ion-option value="5+">5+</ion-option>
+            <ion-option value="6">6</ion-option>
+            <ion-option value="6+">6+</ion-option>
+            <ion-option value="7">7</ion-option>
+            <ion-option value="7+">7+</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('ice_climbing') > -1">
+        <ion-label color="wf" stacked>Cotation mixte</ion-label>
+        <ion-select [(ngModel)]="mixed_rating">
+            <ion-option value="M1">M1</ion-option>
+            <ion-option value="M2">M2</ion-option>
+            <ion-option value="M3">M3</ion-option>
+            <ion-option value="M3+">M3+</ion-option>
+            <ion-option value="M4">M4</ion-option>
+            <ion-option value="M4+">M4+</ion-option>
+            <ion-option value="M5">M5</ion-option>
+            <ion-option value="M5+">M5+</ion-option>
+            <ion-option value="M6">M6</ion-option>
+            <ion-option value="M6+">M6+</ion-option>
+            <ion-option value="M7">M7</ion-option>
+            <ion-option value="M7+">M7+</ion-option>
+            <ion-option value="M8">M8</ion-option>
+            <ion-option value="M8+">M8+</ion-option>
+            <ion-option value="M9">M9</ion-option>
+            <ion-option value="M9+">M9+</ion-option>
+            <ion-option value="M10">M10</ion-option>
+            <ion-option value="M10+">M10+</ion-option>
+            <ion-option value="M11">M11</ion-option>
+            <ion-option value="M11+">M11+</ion-option>
+            <ion-option value="M12">M12</ion-option>
+            <ion-option value="M12+">M12+</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-item *ngIf="activities.indexOf('snow_ice_mixed') > -1 || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1 || activities.indexOf('ice_climbing') > -1">
+        <ion-label color="wf" stacked>Risques objectifs</ion-label>
+        <ion-select [(ngModel)]="risk_rating">
+            <ion-option value="X1">X1</ion-option>
+            <ion-option value="X2">X2</ion-option>
+            <ion-option value="X3">X3</ion-option>
+            <ion-option value="X4">X4</ion-option>
+            <ion-option value="X5">X5</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+
+    <ion-item *ngIf="activities.indexOf('via_ferrata') > -1">
+        <ion-label color="wf" stacked>Cotation via ferrata</ion-label>
+        <ion-select [(ngModel)]="via_ferrata_rating">
+            <ion-option value="K1">K1</ion-option>
+            <ion-option value="K2">K2</ion-option>
+            <ion-option value="K3">K3</ion-option>
+            <ion-option value="K4">K4</ion-option>
+            <ion-option value="K5">K5</ion-option>
+            <ion-option value="K6">K6</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('hiking') > -1">
+        <ion-label color="wf" stacked>Cotation randonnée / trail</ion-label>
+        <ion-select [(ngModel)]="hiking_rating">
+            <ion-option value="T1">T1</ion-option>
+            <ion-option value="T2">T2</ion-option>
+            <ion-option value="T3">T3</ion-option>
+            <ion-option value="T4">T4</ion-option>
+            <ion-option value="T5">T5</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('mountain_biking') > -1">
+        <ion-label color="wf" stacked>Cotation VTT descente</ion-label>
+        <ion-select [(ngModel)]="mtb_down_rating">
+            <ion-option value="V1">V1</ion-option>
+            <ion-option value="V2">V2</ion-option>
+            <ion-option value="V3">V3</ion-option>
+            <ion-option value="V4">V4</ion-option>
+            <ion-option value="V5">V5</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('mountain_biking') > -1">
+        <ion-label color="wf" stacked>Cotation VTT montée</ion-label>
+        <ion-select [(ngModel)]="mtb_up_rating">
+            <ion-option value="M1">M1</ion-option>
+            <ion-option value="M2">M2</ion-option>
+            <ion-option value="M3">M3</ion-option>
+            <ion-option value="M4">M4</ion-option>
+            <ion-option value="M5">M5</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1">
+        <ion-label color="wf" stacked>Cotation libre</ion-label>
+        <ion-select [(ngModel)]="rock_free_rating">
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3a">3a</ion-option>
+            <ion-option value="3b">3b</ion-option>
+            <ion-option value="3c">3c</ion-option>
+            <ion-option value="4a">4a</ion-option>
+            <ion-option value="4b">4b</ion-option>
+            <ion-option value="4c">4c</ion-option>
+            <ion-option value="5a">5a</ion-option>
+            <ion-option value="5a+">5a+</ion-option>
+            <ion-option value="5b">5b</ion-option>
+            <ion-option value="5b+">5b+</ion-option>
+            <ion-option value="5c">5c</ion-option>
+            <ion-option value="5c+">5c+</ion-option>
+            <ion-option value="6a">6a</ion-option>
+            <ion-option value="6a+">6a+</ion-option>
+            <ion-option value="6b">6b</ion-option>
+            <ion-option value="6b+">6b+</ion-option>
+            <ion-option value="6c">6c</ion-option>
+            <ion-option value="7a">7a</ion-option>
+            <ion-option value="7a+">7a+</ion-option>
+            <ion-option value="7b">7b</ion-option>
+            <ion-option value="7b+">7b+</ion-option>
+            <ion-option value="7c">7c</ion-option>
+            <ion-option value="7c+">7c+</ion-option>
+            <ion-option value="8a">8a</ion-option>
+            <ion-option value="8a+">8a+</ion-option>
+            <ion-option value="8b">8b</ion-option>
+            <ion-option value="8b+">8b+</ion-option>
+            <ion-option value="8c">8c</ion-option>
+            <ion-option value="8c+">8c+</ion-option>
+            <ion-option value="9a">9a</ion-option>
+            <ion-option value="9a+">9a+</ion-option>
+            <ion-option value="9b">9b</ion-option>
+            <ion-option value="9b+">9b+</ion-option>
+            <ion-option value="9c">9c</ion-option>
+            <ion-option value="9c+">9c+</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('rock_climbing') > -1 || activities.indexOf('mountain_climbing') > -1">
+        <ion-label color="wf" stacked>Exposition rocher</ion-label>
+        <ion-select [(ngModel)]="exposition_rock_rating">
+            <ion-option value="E1">E1</ion-option>
+            <ion-option value="E2">E2</ion-option>
+            <ion-option value="E3">E3</ion-option>
+            <ion-option value="E4">E4</ion-option>
+            <ion-option value="E5">E5</ion-option>
+            <ion-option value="E6">E6</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1">
+        <ion-label color="wf" stacked>Cotation obligatoire</ion-label>
+        <ion-select [(ngModel)]="rock_required_rating">
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3a">3a</ion-option>
+            <ion-option value="3b">3b</ion-option>
+            <ion-option value="3c">3c</ion-option>
+            <ion-option value="4a">4a</ion-option>
+            <ion-option value="4b">4b</ion-option>
+            <ion-option value="4c">4c</ion-option>
+            <ion-option value="5a">5a</ion-option>
+            <ion-option value="5a+">5a+</ion-option>
+            <ion-option value="5b">5b</ion-option>
+            <ion-option value="5b+">5b+</ion-option>
+            <ion-option value="5c">5c</ion-option>
+            <ion-option value="5c+">5c+</ion-option>
+            <ion-option value="6a">6a</ion-option>
+            <ion-option value="6a+">6a+</ion-option>
+            <ion-option value="6b">6b</ion-option>
+            <ion-option value="6b+">6b+</ion-option>
+            <ion-option value="6c">6c</ion-option>
+            <ion-option value="7a">7a</ion-option>
+            <ion-option value="7a+">7a+</ion-option>
+            <ion-option value="7b">7b</ion-option>
+            <ion-option value="7b+">7b+</ion-option>
+            <ion-option value="7c">7c</ion-option>
+            <ion-option value="7c+">7c+</ion-option>
+            <ion-option value="8a">8a</ion-option>
+            <ion-option value="8a+">8a+</ion-option>
+            <ion-option value="8b">8b</ion-option>
+            <ion-option value="8b+">8b+</ion-option>
+            <ion-option value="8c">8c</ion-option>
+            <ion-option value="8c+">8c+</ion-option>
+            <ion-option value="9a">9a</ion-option>
+            <ion-option value="9a+">9a+</ion-option>
+            <ion-option value="9b">9b</ion-option>
+            <ion-option value="9b+">9b+</ion-option>
+            <ion-option value="9c">9c</ion-option>
+            <ion-option value="9c+">9c+</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+
+    <ion-item *ngIf="activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1">
+        <ion-label color="wf" stacked>Cotation artificielle</ion-label>
+        <ion-select [(ngModel)]="aid_rating">
+            <ion-option value="A0">A0</ion-option>
+            <ion-option value="A0+">A0+</ion-option>
+            <ion-option value="A1">A1</ion-option>
+            <ion-option value="A1+">A1+</ion-option>
+            <ion-option value="A2">A2</ion-option>
+            <ion-option value="A2+">A2+</ion-option>
+            <ion-option value="A3">A3</ion-option>
+            <ion-option value="A3+">A3+</ion-option>
+            <ion-option value="A4">A4</ion-option>
+            <ion-option value="A4+">A4+</ion-option>
+            <ion-option value="A5">A5</ion-option>
+            <ion-option value="A5+">A5+</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1">
+        <ion-label color="wf" stacked>Exposition ski</ion-label>
+        <ion-select [(ngModel)]="ski_exposition">
+            <ion-option value="E1">E1</ion-option>
+            <ion-option value="E2">E2</ion-option>
+            <ion-option value="E3">E3</ion-option>
+            <ion-option value="E4">E4</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-item *ngIf="activities.indexOf('hiking') > -1 || activities.indexOf('mountain_biking') > -1">
+        <ion-label color="wf" stacked>Exposition randonnée, trail et VTT</ion-label>
+        <ion-select [(ngModel)]="hiking_mtb_exposition">
+            <ion-option value="E1">E1</ion-option>
+            <ion-option value="E2">E2</ion-option>
+            <ion-option value="E3">E3</ion-option>
+            <ion-option value="E4">E4</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snow_ice_mixed') > -1  || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snowshoeing') > -1">
+        <ion-label color="wf" stacked>Pente</ion-label>
+        <ion-input type="text" [(ngModel)]="slope"></ion-input>
+    </ion-item>
+
+
+    <ion-card-header class="card-header card-header-md">Commentaires</ion-card-header>
+    <ion-item>
+        <ion-label color="wf" stacked>Résumé</ion-label>
+        <ion-textarea [(ngModel)]="summary" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Description</ion-label>
+        <ion-textarea [(ngModel)]="description" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Remarques</ion-label>
+        <ion-textarea [(ngModel)]="remarks" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Historique de l'itinéraire</ion-label>
+        <ion-textarea [(ngModel)]="history" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Matériel spécifique</ion-label>
+        <ion-textarea [(ngModel)]="gear" placeholder="Précisez ici le matériel spécifique qu'il faut emporter en plus de l'équipement usuel. Seul le matériel &quot;exotique&quot; (en qualité ou quantité) doit être mentionné. Exemples de mentions inutiles : DVA, pelle, sonde, crampons, piolets, matériel de glacier (le champ &quot;matériel de glacier&quot; suffit), coinceurs et sangles sans plus de précision." autosize></ion-textarea>
+    </ion-item>
+
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snow_ice_mixed') > -1
+                     || activities.indexOf('mountain_climbing') > -1 || activities.indexOf('rock_climbing') > -1
+                     || activities.indexOf('ice_climbing') > -1  || activities.indexOf('snowshoeing') > -1
+                     || activities.indexOf('hiking') > -1">
+        <ion-label color="wf" stacked>Matériel glacier</ion-label>
+        <ion-select [(ngModel)]="glacier_gear">
+            <ion-option value="no">non</ion-option>
+            <ion-option value="glacier_safety_gear">matériel de sécurité sur glacier</ion-option>
+            <ion-option value="crampons_spring">crampons en début de saison</ion-option>
+            <ion-option value="crampons_req">crampons indispensable</ion-option>
+            <ion-option value="glacier_crampons">crampons + matériel de sécurité sur glacier</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Ressources externes</ion-label>
+        <ion-textarea [(ngModel)]="external_resources" placeholder="Aucun livre et site web associé à cet itinéraire" autosize></ion-textarea>
+    </ion-item>
+    <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment>
+            <ion-segment-button (click)="saveDraft(true)" value="saveDraft">
+                <ion-icon name="archive"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button (click)="save()" value="save">
+                <ion-icon name="cloud-upload"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button>
+                <ion-icon name="trash" (click)="removeRoute(true)" value="remove"></ion-icon>
+            </ion-segment-button>
+
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

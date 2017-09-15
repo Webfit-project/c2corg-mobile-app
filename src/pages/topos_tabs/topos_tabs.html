@@ -1,0 +1,173 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title #focusable><img src="assets/img/l2.svg" /></ion-title>
+           <ion-buttons end>
+            <button ion-button (click)="addRoute()" class="btnadd">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+<ion-searchbar (ionClear)="clearItems($event)" (ionInput)="cancelItems($event)" (search)="getItems($event)" color="wf" [(ngModel)]="search" placeholder="Recherche"></ion-searchbar>
+</ion-header>
+
+<div class="labelContainer" *ngIf="showMenuItem"></div>
+<ion-content>
+    <ion-fab top left #fab>
+        <button ion-fab color="fondb" (click)="showMenuItems()" [ngClass]="{'bgg': iconfab == 'glyphicon glyphicon-play-circle'}"><span class="route-activity {{iconfab}}"></span></button>
+        <ion-fab-list side="bottom">
+            <button ion-fab (click)="filter('skitouring',fab)"><span class="activity icon-skitouring"></span></button>
+            <button ion-fab (click)="filter('snow_ice_mixed',fab)"><span class="activity icon-snow_ice_mixed"></span></button>
+            <button ion-fab (click)="filter('mountain_climbing',fab)"><span class="activity icon-mountain_climbing"></span></button>
+            <button ion-fab (click)="filter('rock_climbing',fab)"><span class="activity icon-rock_climbing"></span></button>
+            <button ion-fab (click)="filter('ice_climbing',fab)"><span class="activity icon-ice_climbing"></span></button>
+            <button ion-fab (click)="filter('slacklining',fab)"><span class="activity icon-slacklining"></span></button>
+
+        </ion-fab-list>
+        <ion-fab-list side="right">
+            <button ion-fab (click)="filter('snowshoeing',fab)"><span class="activity icon-snowshoeing"></span></button>
+            <button ion-fab (click)="filter('paragliding',fab)"><span class="activity icon-paragliding"></span></button>
+            <button ion-fab (click)="filter('mountain_biking',fab)"><span class="activity icon-mountain_biking"></span></button>
+            <button ion-fab (click)="filter('via_ferrata',fab)"><span class="activity icon-via_ferrata"></span></button>
+            <button ion-fab (click)="filter('hiking',fab)"><span class="activity icon-hiking"></span></button>
+        </ion-fab-list>
+    </ion-fab>
+    <button *ngIf="!showMenuItem" class="btfilter" (click)="modalFilter()" ion-fixed><span class="glyphicon glyphicon-filter"></span></button>
+    <div [ngSwitch]="topos">
+        <div *ngSwitchCase="'list'">
+            <div class="title-top-list">{{nbroutes}} Itineraire<ng-container *ngIf="nbroutes>0">s</ng-container></div>
+            <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+            <div class="btreload" *ngIf="btreload" (click)="reloadRoutes()">Recharger les itinéraires</div>
+            <div class="cards-bg" *ngFor="let p of routes">
+                <ion-card (click)="gotoPage(p.document_id)">
+                  <!--  <img src="assets/img/tmp/img3.jpg" *nb/> -->
+                 <ion-card-content>
+                        <ion-card-title>
+                            {{p.locales[p.idlg].title_prefix}} : {{p.locales[p.idlg].title}}
+                        </ion-card-title>
+                        <p *ngIf="p.locales[p.idlg].summary != null && p.locales[p.idlg].summary != ''">
+                            {{p.locales[p.idlg].summary}}
+                        </p>
+                    </ion-card-content>
+                    <ion-row no-padding>
+                        
+                        <ion-col *ngIf="p.elevation_max != null">
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-sort-by-attributes rotate-180 cg"></span>
+                                {{p.elevation_max}}
+                            </button>
+                        </ion-col> 
+                           <ion-col *ngIf="p.height_diff_up != null">
+                            <button ion-button clear small icon-left>
+                                <span class="inf icon-height_diff cg"></span>
+                                {{p.height_diff_up}}
+                            </button>
+                        </ion-col>
+                        
+                     <ion-col *ngIf="p.orientations != null">
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-fullscreen cg"></span>
+                                <span *ngFor="let o of p.orientations; let i = index"><ng-container *ngIf="i>0">,</ng-container>{{o}} </span>
+                            </button>
+                        </ion-col>
+                         <ion-col *ngIf="p.via_ferrata_rating != null || p.engagement_rating || p.equipment_rating || p.global_rating || p.rock_free_rating ||p.rock_required_rating || p.aid_rating ||p.ice_rating || p.mixed_rating || p.risk_rating || p.exposition_rock_rating || p.ski_rating || p.ski_exposition ||p.labande_global_rating ||p.hiking_rating ||p.snowshoe_rating ||p.mtb_up_rating ||p.mtb_down_rating || p.hiking_mtb_exposition">
+                            <button ion-button clear small icon-left>
+                                <span class="inf icon-rating cg"></span>
+                                <p>{{p.global_rating}} {{p.rock_free_rating}}<ng-container *ngIf="rock_free_rating != null && rock_required_rating != null">&gt;</ng-container>{{p.rock_required_rating}} {{p.aid_rating}} {{p.ice_rating}} {{p.mixed_rating}} {{p.via_ferrata_rating}}  {{p.engagement_rating}} {{p.risk_rating}}  {{p.equipment_rating}}  {{p.exposition_rock_rating}} {{p.ski_rating}}<ng-container *ngIf="ski_rating != null && ski_exposition!= null">/</ng-container>{{p.ski_exposition}} {{p.labande_global_rating}}<ng-container *ngIf="labande_global_rating != null && labande_ski_rating!= null">/</ng-container>{{p.labande_ski_rating}} {{p.hiking_rating}} {{p.snowshoe_rating}} {{p.mtb_up_rating}} {{p.mtb_down_rating}} {{p.hiking_mtb_exposition}}</p>
+                            </button>
+                        </ion-col>
+                    
+                        <ion-col *ngIf="p.areas != null && p.areas != ''">
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-map-marker cg"></span>
+                               {{p.areas[p.areas.length-1].locales[0].title}}
+                            </button>
+                        </ion-col>
+
+                    </ion-row>
+                    <ion-row no-padding>
+                        <ion-col>
+                            <button ion-button clear small icon-left ><span *ngFor="let a of p.activities" class="activity icon-{{a}}"></span></button>
+                        </ion-col>
+                    </ion-row>
+
+                </ion-card>
+            </div>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </div>
+            <div *ngSwitchCase="'offline'">
+             <div class="title-top-list">{{nbroutes_off}} Itineraire<ng-container *ngIf="nbroutes_off>0">s</ng-container></div>
+            <div class="ploader" *ngIf="loader_off"><ion-spinner></ion-spinner></div>
+            <div class="cards-bg" *ngFor="let p of routes_off">
+                <ion-card (click)="gotoPage(p.document_id)">
+                  <!--  <img src="assets/img/tmp/img3.jpg" *nb/> -->
+                    <ion-card-content>
+                        <ion-card-title>
+                            {{p.locales[p.idlg].title_prefix}} : {{p.locales[p.idlg].title}}
+                        </ion-card-title>
+                        <p>
+                            {{p.locales[p.idlg].summary}}
+                        </p>
+                    </ion-card-content>
+                    <ion-row no-padding>
+                       <ion-col  *ngIf="p.elevation_max != null">
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-sort-by-attributes rotate-180 cg"></span>
+                                {{p.elevation_max}}
+                            </button>
+                        </ion-col> 
+                           <ion-col *ngIf="p.height_diff_up != null">
+                            <button ion-button clear small icon-left>
+                                <span class="inf icon-height_diff cg"></span>
+                                {{p.height_diff_up}}
+                            </button>
+                        </ion-col>
+                     <ion-col *ngIf="p.orientations != null">
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-fullscreen cg"></span>
+                                <span *ngFor="let o of p.orientations; let i = index"><ng-container *ngIf="i>0">,</ng-container>{{o}} </span>
+                            </button>
+                        </ion-col>
+                         <ion-col *ngIf="p.via_ferrata_rating != null || p.engagement_rating || p.equipment_rating ">
+                            <button ion-button clear small icon-left>
+                                <span class="inf icon-rating cg"></span>
+                                {{p.via_ferrata_rating}} {{p.engagement_rating}} {{p.equipment_rating}}
+                            </button>
+                        </ion-col>
+                        <ion-col>
+                            <button ion-button clear small icon-left>
+                                <span class="glyphicon glyphicon-map-marker cg"></span>
+                               {{p.areas[p.areas.length-1].locales[0].title}}
+                            </button>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row no-padding>
+                        <ion-col>
+                            <button ion-button clear small icon-left ><span *ngFor="let a of p.activities" class="activity icon-{{a}}"></span></button>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </div>
+       
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="topos">
+             <ion-segment-button value="list">
+                Tous les topos
+            </ion-segment-button>
+                   <ion-segment-button value="offline">
+                Topos enregistré
+            </ion-segment-button>
+            <ion-segment-button value="list" (click)="showMap()" class="noactivated">
+                Voir la carte
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

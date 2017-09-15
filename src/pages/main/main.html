@@ -1,0 +1,107 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="navigateTo('config')">
+                <img src="assets/img/c.svg" />
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+
+    <a class="apn" (click)="goUploadPicture()" *ngIf="nbimginwait > 0" ion-fixed>
+        <span class="glyphicon glyphicon-camera"></span>
+    </a>
+<!--
+    <a class="upl" (click)="goUpload()" *ngIf="nbulinwait > 0" ion-fixed>
+        <span class="glyphicon glyphicon-upload"></span>
+    </a>
+-->
+     <a class="road" (click)="navigateTo('toposhl')" *ngIf="nbtoposhl > 0 && displayltoposhl" ion-fixed>
+        <span class="glyphicon glyphicon-road"></span>
+    </a>
+    
+    <a class="gps" (click)="navigateTo('trace')" ion-fixed>
+        <span class="glyphicon glyphicon-map-marker"></span>
+    </a>
+    <div role="main" class="wtop wtop-i">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgg"><img src="{{portrait}}" class="imgp"></div></div></a>
+        </div>
+        <div class="ui-content ui-max">
+            <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+            <div class="btreload" *ngIf="btreload" (click)="reloadFeed()">Recharger le fil d'actualité</div>
+            <div class="post-container">
+
+                <div class="post" *ngFor="let p of posts" (click)="goToPage(p.type,p.id)">
+                    <div class="infoa">
+                        <a class="pportrait">
+                            <img class="URgs7" height="36" width="36" src="{{p.portraittmp}}" alt=""> </a>
+                        <div class="parent-author">
+                            <div class="under-author">
+                                <div class="author">{{p.author.name}}
+                                </div>
+                            </div>
+                            <div class="parent-hour">
+                                <div class="hour"><span class="d-hour">{{displayDate(p.realtime)}}</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="parent-text">
+                        <div class="text"><a>{{p.title}}</a> <br *ngIf="p.summary != null && p.summary != ''" /><br *ngIf="p.summary != null && p.summary != ''" /><markdown [data]="p.summary"></markdown></div>
+                    </div>
+                    <div class="relative-sep" *ngIf="p.images?.length == 0">&nbsp;</div>
+                    <div class="parent-img" *ngIf="p.images?.length > 0">
+                        <div class="img" >
+                            <img class="imgo" src="{{p.imgtmp}}" (onload)="onload('p')"/>
+                        </div>
+                    </div>
+
+                    <div class="parent-infop">
+                        <div class="infop-bar">
+
+                            <div class="parent-bubble" *ngFor="let ic of p.activities;let i = index">
+                                <div class="bubble" *ngIf="i < 4">
+                                    <span class="route-activity icon-{{ic}}"></span>
+                                </div>
+                            </div>
+
+                            <div class="grow">
+                            </div>
+
+                            <div class="parent-bubble" *ngIf="p.area != null">
+                                <div class="bubble bubblei">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                </div>
+                            </div>
+
+                            <div class="text-bubble" *ngIf="p.area != null">
+                                {{p.area}}
+                            </div>
+                            <div class="parent-bubble" *ngIf="p.elevation_max != null">
+                                <div class="bubble bubblei">
+                                    <span class="glyphicon glyphicon-resize-vertical"></span>
+                                </div>
+                            </div>
+
+                            <div class="text-bubble" *ngIf="p.elevation_max != null">
+                                {{p.elevation_max}}
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </div>
+    </div>
+</ion-content>

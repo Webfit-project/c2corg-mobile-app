@@ -1,0 +1,91 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+               <button ion-button (click)="toposModal(false)">
+                <span class="btphoto glyphicon glyphicon-road"></span>
+            </button>
+            
+                <button ion-button (click)="addWaypoint()">
+                <span class="btphoto glyphicon glyphicon-map-marker"></span>
+            </button>
+            
+            <button ion-button (click)="takePicture()">
+                <span class="btphoto glyphicon glyphicon-camera"></span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div class="labelContainer" *ngIf="showMenuItem" ion-fixed></div>
+    <ion-fab #fab>
+        <button ion-fab color="fondb" (click)="showMenuItems()" [ngClass]="{'bgg': iconfab == 'glyphicon glyphicon-cog'}"><span class="route-activity {{iconfab}}"></span></button>
+        <ion-fab-list side="bottom">
+            <button ion-fab (click)="filter('glyphicon glyphicon-cog',fab)" class="bgo"><span class="glyphicon glyphicon-cog"></span></button>
+            <button ion-fab (click)="filter('skitouring',fab)"><span class="activity icon-skitouring"></span></button>
+            <button ion-fab (click)="filter('snow_ice_mixed',fab)"><span class="activity icon-snow_ice_mixed"></span></button>
+            <button ion-fab (click)="filter('mountain_climbing',fab)"><span class="activity icon-mountain_climbing"></span></button>
+            <button ion-fab (click)="filter('rock_climbing',fab)"><span class="activity icon-rock_climbing"></span></button>
+            <button ion-fab (click)="filter('ice_climbing',fab)"><span class="activity icon-ice_climbing"></span></button>
+            <button ion-fab (click)="filter('slacklining',fab)"><span class="activity icon-slacklining"></span></button>
+        </ion-fab-list>
+        <ion-fab-list side="left">
+            <button ion-fab (click)="filter('snowshoeing',fab)"><span class="activity icon-snowshoeing"></span></button>
+            <button ion-fab (click)="filter('paragliding',fab)"><span class="activity icon-paragliding"></span></button>
+            <button ion-fab (click)="filter('mountain_biking',fab)"><span class="activity icon-mountain_biking"></span></button>
+            <button ion-fab (click)="filter('via_ferrata',fab)"><span class="activity icon-via_ferrata"></span></button>
+            <button ion-fab (click)="filter('hiking',fab)"><span class="activity icon-hiking"></span></button>
+        </ion-fab-list>
+    </ion-fab>
+    <div role="main" class="wtop wtop-i ">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgr btplay" *ngIf="btplay" (click)='beforeStartSensor()'><ion-icon name="play"></ion-icon></div><div class="bgr btplay btpause" *ngIf="btpause"><ion-icon name="pause" (click)='pauseSensor()'></ion-icon></div></div></a>
+            <a class="ui-link" *ngIf="btstop"><div class="stop" (click)='stopSensor()'><div class="bgr"><ion-icon name="square"></ion-icon></div></div></a>
+             <a class="ui-link"><div class="sport">  </div></a>
+            
+        </div>
+        <div class="ui-content ui-max">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-100 class="sensor-main">
+                        <data (click)="getWaypoints()">
+                            <span class="number">{{nbwaypoint}}</span>
+                            <span class="desc">points de passages</span>
+                        </data>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-15></ion-col>
+                    <ion-col width-35 class="sensor" (click)="showInfo(0)"><span class="icon-mesu"><ion-icon name="trending-up"></ion-icon></span><data><span class="number">{{distance}}</span> <span class="unit">m</span></data></ion-col>
+                    <ion-col width-15></ion-col>
+                    <ion-col width-35 class="sensor" (click)="showInfo(1)"><span class="icon-mesu"><ion-icon name="stats"></ion-icon></span><data><span class="number">{{precision}}</span> <span class="unit">m</span></data></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-15></ion-col>
+                    <ion-col width-35 class="sensor" (click)="showInfo(2)"><span class="icon-mesu"> <ion-icon name="resize"></ion-icon></span><data><span class="number">{{denivele_pos}}</span> <span class="unit">m</span></data></ion-col>
+                    <ion-col width-15></ion-col>
+                    <ion-col width-35 class="sensor" (click)="showInfo(3)"><span class="icon-mesu"><ion-icon name="stopwatch"></ion-icon></span><data><span class="number">{{chrono}}</span><span class="unit">&nbsp;</span> </data></ion-col>
+                </ion-row>
+            </ion-grid>
+
+        </div>
+    </div>
+    
+
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="topos">
+             <ion-segment-button value="list" class="noactivated" (click)="showTopo()">
+                Voir le topoguide
+            </ion-segment-button>
+            <ion-segment-button value="list" (click)="showMap()" class="noactivated">
+                Voir la carte
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        
+        
+        <ion-buttons end>
+            <button ion-button (click)="deleteImg(true)" class="btnadd">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let p of pictures">
+            <ion-thumbnail item-left>
+                <img src="{{p.data.filename}}">
+            </ion-thumbnail>
+            <ion-label>
+                  <div *ngIf="p.error == true">
+                    <h2 class="error">Erreur pendant le transfert.</h2>
+                </div>
+                <div *ngIf="p.inupload == false && p.error == false">
+                    <h2>{{p.attribute.title}} - {{p.id_outing}}</h2>
+                    <p>{{p.attribute.categories}} - {{p.attribute.type}}</p>
+                </div>
+                <div *ngIf="p.inupload == true && p.error == false">
+                    <div class="progress-outer">
+                        <div class="progress-inner" [ngClass]="{'ok': p.uploaded == true}" [ngStyle]="{'width': ''+p.loaded+''}">
+                            {{p.loaded}}
+                        </div>
+                    </div>
+                </div>
+            </ion-label>
+
+            <ion-checkbox  checked item-right (click)="togglePicture(p)"></ion-checkbox>
+        </ion-item>
+    </ion-list>
+    <div class="sendigok">
+        
+    </div>
+     <div class="boxsave" *ngIf="btclose">
+        <div class="bt btclose" (click)="close()">Fermer</div>
+    </div>
+      <div class="boxsave" *ngIf="btcancel">
+        <div class="bt btclose" (click)="cancel()">Annuler</div>
+    </div>
+    <div class="boxsave" *ngIf="btsave">
+        <div class="bt btsave" (click)="save()">Envoyer</div>
+    </div>
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div role="main" class="wtop wtop-i">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgg"><img src="{{portrait}}" class="imgp"></div></div></a>
+        </div>
+        <div class="ui-content ui-max">
+            <div class="content-container">
+                <ion-item-divider color="light">Options</ion-item-divider>
+                <ion-list no-lines list-ios>
+                    <button ion-item *ngFor="let item of item_options" (click)="itemSelected(item.id)">
+                        {{ item.title }} </button> 
+                </ion-list>
+
+                <ion-item-divider color="light">Informations</ion-item-divider>
+                <ion-list no-lines list-ios>
+                    <button ion-item *ngFor="let item of item_info" (click)="itemSelected(item.id)">
+                        {{ item.title}}
+                    </button> 
+                </ion-list>
+              
+                <ion-item-divider color="light">Autres</ion-item-divider>
+                <ion-list no-lines list-ios>
+                    <button ion-item *ngFor="let item of item_other" (click)="itemSelected(item.id)">
+                        {{ item.title}}
+                    </button> 
+                </ion-list>
+                  <ion-list no-lines list-ios>
+                    <button ion-item>Version 1.0.0</button>
+                </ion-list>
+            </div>
+        </div>
+    </div>
+</ion-content>

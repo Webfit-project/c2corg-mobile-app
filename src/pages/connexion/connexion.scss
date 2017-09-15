@@ -1,0 +1,90 @@
+.fondl {
+    background: #fff url(../assets/img/f/f.png) 0px 0px no-repeat;
+    background-size: 100%;
+}
+
+.wtop {
+    position: absolute;
+    width: 100%;
+    top: 30%;
+    z-index: 1000;
+}
+
+.pbottom {
+    background: #fff;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 50%;
+}
+
+.boxsignin {
+    bottom: 10px;
+    width: 40%;
+    left: 30%;
+    background: rgba(169, 211, 97, 1);
+    // background: #fff;
+    position: absolute;
+    text-align: center;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 27px;
+}
+
+.toolbar-background-md {
+    border-color: #fff;
+    background: #fff;
+}
+
+.footer-md::before {
+    background-image: none;
+}
+
+.spin {
+    text-align: center;
+}
+
+
+.boxlogin  .input-wrapper, .boxlogin  .item-inner {
+    border-radius: .3125em;
+}
+.boxlogin ion-item { margin: .5em 0;  padding-left: 0px;  }   
+.boxlogin ion-input {
+    padding: 8px 0;
+    border-radius: .3125em;
+    background-color: #e5e5e5;
+    border-color: #e5e5e5;
+    color: #7d7d7d;
+}
+.boxlogin .list-md .item-block .item-inner {
+    border-bottom: none;
+    padding-right: 0;
+}
+
+.boxlogin .list-ios > .item-block:first-child {
+    border-top: none;
+}
+.boxlogin .list-ios .item-block .item-inner
+{
+    border-bottom: none;
+    padding-right: 0;
+}
+
+.bt-txt {
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    width: 100%;
+    text-decoration: none;
+}
+.cg {
+    color: #939598;
+}
+page-connexion .spinner-md-crescent circle {
+    stroke: #FFAA45;
+}
+
+page-connexion .list-md .item-input.input-has-focus:last-child {
+    border: 0px;
+    box-shadow: none;
+}

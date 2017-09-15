@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="fondl">
+    <div class="wtop bgw">
+        <div class="center"><div class="portrait"><div class="bgg"><img src="assets/img/p/default.svg"></div></div></div>
+        <div class="boxlogin">
+            <p>Un email vous sera envoyé pour modifier votre mot de passe.</p>
+            <ion-list>
+                <ion-item>
+                    <ion-input type="text" placeholder="Email" [(ngModel)]="femail"></ion-input>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>
+<div class="pbottom">
+    <ion-footer>
+        <div class="boxsignin bt">
+            <a class="btins ui-link button" (click)='sendMail()'>Envoyer</a>
+        </div>
+    </ion-footer>
+</div>

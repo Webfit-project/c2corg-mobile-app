@@ -1,0 +1,58 @@
+page-picturetoupload 
+{
+    .btsave {
+        width: 100%;
+
+        background: rgba(169, 211, 97, 1);
+
+        text-align: center;
+        padding: 8px 0 6px 0;
+        font-size: 27px;
+    }
+
+    .error {
+        color: #f53d3d;
+    }
+    .btclose {
+        width: 100%;
+
+        background: rgba(255,170,69,0.95);
+
+        text-align: center;
+        padding: 8px 0 6px 0;
+        font-size: 27px;
+    }
+
+    .boxsave {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .btnadd {
+        font-size: 2.5rem;
+    }
+}
+
+.progress-outer {
+    width: 96%;
+    margin: 10px 2%;
+    padding: 3px;
+    text-align: center;
+    background-color: #f4f4f4;
+    border: 1px solid #dcdcdc;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.progress-inner {
+    width:0%;
+    min-width: 15%;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: map-get($colors, primary);
+}
+.progress-inner.ok {
+    background-color:rgba(169, 211, 97, 1);
+}

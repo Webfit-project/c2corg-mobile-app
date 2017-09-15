@@ -1,0 +1,367 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="openPhotoLibrary()">
+                <span class="btphoto glyphicon glyphicon-picture"></span>
+            </button>
+            <button ion-button (click)="takePicture()">
+                <span class="btphoto glyphicon glyphicon-camera"></span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-title *ngIf="idd == -1">Ajouter une sortie</ion-title>
+    <ion-title *ngIf="idd != -1">Modifier une sortie</ion-title>
+    
+    <ion-card-header class="card-header card-header-md">Photos</ion-card-header>
+    
+         <ion-row class="mb20">
+                    <ion-col width-100 class="sensor-main">
+                        <data (click)='openImageToUl()'>
+                            <span class="number">{{picturetoul.length}}</span>
+                            <span class="desc">photo<ng-container *ngIf="picturetoul.length > 1">s</ng-container> associée<ng-container *ngIf="picturetoul.length > 1">s</ng-container></span>
+                        </data>
+                    </ion-col>
+                </ion-row>
+    <ion-card-header class="card-header card-header-md">Informations générales</ion-card-header>
+
+    <ion-item tappable [ngClass]="{'input-need-data': date_start_nd == true}" (click)="goDatePicker()">
+        <ion-label color="wf" stacked>Date de début</ion-label>
+
+        <ion-input type="text" [(ngModel)]="date_start" disabled="true"></ion-input>
+    </ion-item>
+
+    <ion-item tappable (click)="goDatePickerEnd()">
+        <ion-label color="wf" stacked>Date de fin</ion-label>
+        <ion-input type="text" [(ngModel)]="date_end" disabled="true"></ion-input>
+    </ion-item>
+
+    <ion-item [ngClass]="{'input-need-data': activities_nd == true}">
+        <ion-label color="wf" stacked>Activités</ion-label>
+        <ion-select [(ngModel)]="activities" multiple="true" cancelText="Annuler" okText="Valider">
+            <ion-option value="skitouring" selected="true">Ski,surf</ion-option>
+            <ion-option value="snow_ice_mixed">Neige, glace et mixte</ion-option>
+            <ion-option value="mountain_climbing">Rocher haute montagne</ion-option>
+            <ion-option value="rock_climbing">Escalade</ion-option>
+            <ion-option value="ice_climbing">Cascade de glace</ion-option>
+            <ion-option value="hiking">Randonnée / Trail</ion-option>
+            <ion-option value="snowshoeing">Raquette</ion-option>
+            <ion-option value="paragliding">Parapente</ion-option>
+            <ion-option value="mountain_biking">VTT</ion-option>
+            <ion-option value="via_ferrata">Via ferrata</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item [ngClass]="{'input-need-data': rtlist_nd == true}">
+        <ion-label color="wf" stacked>Itinéraire emprunté</ion-label>
+        <ion-input type="text" placeholder="Rechercher..." [(ngModel)]="searchrt" (keyup)="getItemsRt($event)" (ionInput)="onInputRt($event)"></ion-input>
+    </ion-item>
+    <ion-list>
+        <ion-item *ngFor="let p of autocompletertol"><ion-thumbnail item-left>
+            <span class="glyphicon glyphicon-phone"> </span>
+            </ion-thumbnail>{{displayTitleRoute(p)}} <button class="add" ion-button clear item-right (click)="addRoute(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+        <ion-item *ngFor="let p of autocompletert">{{displayTitleRoute(p)}} <button class="add" ion-button clear item-right (click)="addRoute(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-item *ngFor="let p of rtlist">{{displayTitleRoute(p)}}  <button class="remove" ion-button clear item-right (click)="rmRoute(p)"><ion-icon name="remove"></ion-icon>
+            </button></ion-item>
+    </ion-list>
+    <ion-item>
+        <ion-label color="wf" stacked>Description de l'itinéraire</ion-label>
+        <ion-textarea [(ngModel)]="route_description" placeholder="Description de l'itinéraire" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Durée</ion-label>
+        <ion-textarea [(ngModel)]="timing" placeholder="Heure de départ / horaire" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label>Parcours partiel</ion-label>
+        <ion-checkbox color="wf" checked="true" [(ngModel)]="partial_trip"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Longueur totale</ion-label>
+        <ion-input type="number" placeholder="en km" [(ngModel)]="length_total"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Altitude minimale</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_min"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Altitude maximale</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_max"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Dénivelé positif</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="height_diff_up"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Dénivelé négatif</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="height_diff_down"></ion-input>
+    </ion-item>
+
+
+
+    <ion-card-header class="card-header card-header-md">Météo &amp; Conditions</ion-card-header>
+    <ion-item>
+        <ion-label color="wf" stacked>Méteo</ion-label>
+        <ion-textarea [(ngModel)]="weather" placeholder="Conditions météorologiques rencontrées lors de la sortie : couverture nuageuse, précipitations, vent, température" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Conditions</ion-label>
+        <ion-textarea [(ngModel)]="conditions" placeholder="Conditions de terrain, équipement et qualité du rocher rencontrés (approche, voie, et à proximité)" autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Évaluation des conditions</ion-label>
+        <ion-select [(ngModel)]="condition_rating">
+            <ion-option value="" selected="true">Inconnus</ion-option>
+            <ion-option value="excellent">Excellentes</ion-option>
+            <ion-option value="good">Bonnes</ion-option>
+            <ion-option value="average">Moyennes</ion-option>
+            <ion-option value="poor">Mauvaises</ion-option>
+            <ion-option value="awful">Exécrables</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1  || activities.indexOf('mountain_climbing') > -1  || activities.indexOf('snow_ice_mixed') > -1">
+        <ion-label color="wf" stacked>Altitude de chaussage</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_up_snow"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1  || activities.indexOf('mountain_climbing') > -1  || activities.indexOf('snow_ice_mixed') > -1">
+        <ion-label color="wf" stacked>Altitude de déchaussage</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_down_snow"></ion-input>
+    </ion-item>
+
+
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1 ">
+        <ion-label color="wf">Conditions d'enneigement par zones</ion-label>
+    </ion-item>
+    <div class="center" *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1 ">
+        <ion-list>
+            <ion-item *ngFor="let p of conditions_levels">{{p.level_place}} <button class="remove" ion-button clear item-right (click)="rmConditionsLevels(p)"><ion-icon name="remove"></ion-icon>
+                </button></ion-item>
+        </ion-list>
+        <button ion-button (click)="conditionslevelsModal()">Ajouter une ligne</button>
+    </div>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1  || activities.indexOf('mountain_climbing') > -1  || activities.indexOf('snow_ice_mixed') > -1 ">
+        <ion-label color="wf" stacked>Quantité de neige</ion-label>
+        <ion-select [(ngModel)]="snow_quantity">
+            <ion-option value="">Inconnus</ion-option>
+            <ion-option value="excellent">Excellentes</ion-option>
+            <ion-option value="good">Bonnes</ion-option>
+            <ion-option value="average">Moyennes</ion-option>
+            <ion-option value="poor">Mauvaises</ion-option>
+            <ion-option value="awful">Exécrables</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1  || activities.indexOf('mountain_climbing') > -1  || activities.indexOf('snow_ice_mixed') > -1 ">
+        <ion-label color="wf" stacked>Qualité de neige</ion-label>
+        <ion-select [(ngModel)]="snow_quality">
+            <ion-option value="">Inconnus</ion-option>
+            <ion-option value="excellent">Excellentes</ion-option>
+            <ion-option value="good">Bonnes</ion-option>
+            <ion-option value="average">Moyennes</ion-option>
+            <ion-option value="poor">Mauvaises</ion-option>
+            <ion-option value="awful">Exécrables</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('mountain_climbing') > -1  || activities.indexOf('snow_ice_mixed') > -1 ">
+        <ion-label color="wf" stacked>Etat du glacier</ion-label>
+        <ion-select [(ngModel)]="glacier_rating">
+            <ion-option value="">Inconnus</ion-option>
+            <ion-option value="easy">Bouché - passage sans problème</ion-option>
+            <ion-option value="possible">Délicat - passage possible</ion-option>
+            <ion-option value="difficult">Ouvert - passage difficile</ion-option>
+            <ion-option value="impossible">Infranchissable - passage impossible</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-label *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1" class="titleoi">Signes d'avalanche</ion-label>
+    <ion-item *ngIf="activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1">
+        <ion-label>non</ion-label>
+        <ion-checkbox color="wf" [(ngModel)]="avalanche_signs_no"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="(activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1) && avalanche_signs_no == false">
+        <ion-label>signaux d'alerte autres que des traces d'avalanche</ion-label>
+        <ion-checkbox color="wf" [(ngModel)]="avalanche_signs_sign"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="(activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1) && avalanche_signs_no == false">
+        <ion-label>trace d'avalanche récente (après la dernière chute de neige, pluie, vent ou redoux)</ion-label>
+        <ion-checkbox color="wf" [(ngModel)]="avalanche_signs_trace"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="(activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1) && avalanche_signs_no == false">
+        <ion-label>avalanche naturelle le jour de la sortie</ion-label>
+        <ion-checkbox color="wf" [(ngModel)]="avalanche_signs_natur"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="(activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1 || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1) && avalanche_signs_no == false">
+        <ion-label>avalanche déclenchée par une personne le jour de la sortie</ion-label>
+        <ion-checkbox color="wf" [(ngModel)]="avalanche_signs_human"></ion-checkbox>
+    </ion-item>
+
+
+
+    <ion-item *ngIf="(activities.indexOf('skitouring') > -1 || activities.indexOf('snowshoeing') > -1
+                     || activities.indexOf('ice_climbing') > -1 || activities.indexOf('snow_ice_mixed') > -1) && (avalanche_signs != 'no' && avalanche_signs != null) ">
+        <ion-label color="wf" stacked>Observations relatives aux avalanches</ion-label>
+        <ion-textarea [(ngModel)]="avalanches" autosize></ion-textarea>
+    </ion-item>
+
+
+    <ion-card-header class="card-header card-header-md">Accès &amp; refuge/cabane</ion-card-header>
+    <ion-item>
+        <ion-label>Sortie en mobilité douce</ion-label>
+        <ion-checkbox color="wf" checked="true" [(ngModel)]="public_transport"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Fréquentation</ion-label>
+        <ion-select [(ngModel)]="frequentation">
+            <ion-option value="" selected="true">Inconnus</ion-option>
+            <ion-option value="quiet">non fréquenté</ion-option>
+            <ion-option value="some">peu fréquenté</ion-option>
+            <ion-option value="crowded">assez fréquenté</ion-option>
+            <ion-option value="overcrowded">très fréquenté</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+        <ion-label color="wf" stacked>Remontées mécaniques</ion-label>
+        <ion-select [(ngModel)]="lift_status">
+            <ion-option value="" selected="true">Inconnus</ion-option>
+            <ion-option value="open">Ouvertes</ion-option>
+            <ion-option value="closed">Fermées</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Commentaires sur le refuge</ion-label>
+        <ion-textarea [(ngModel)]="hut_comment" autosize></ion-textarea>
+    </ion-item>
+
+
+    <ion-item>
+        <ion-label color="wf" stacked>Refuge</ion-label>
+        <ion-select [(ngModel)]="hut_status">
+            <ion-option value="" selected="true">Inconnus</ion-option>
+            <ion-option value="open_guarded">Ouvert gardé</ion-option>
+            <ion-option value="open_non_guarded">Ouvert non gardé</ion-option>
+            <ion-option value="closed_hut">Refuge fermé</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Altitude de l'accès</ion-label>
+        <ion-input type="number" placeholder="en mètre" [(ngModel)]="elevation_access"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Conditions de l'accès</ion-label>
+        <ion-select [(ngModel)]="access_condition">
+            <ion-option value="" selected="true">Inconnus</ion-option>
+            <ion-option value="cleared">Déneigé</ion-option>
+            <ion-option value="snowy">Enneigé</ion-option>
+            <ion-option value="closed_snow">Fermé enneigé</ion-option>
+            <ion-option value="closed_cleared">Fermé déneigé</ion-option>
+        </ion-select>
+    </ion-item>
+
+
+
+
+    <ion-item>
+        <ion-label color="wf" stacked>Commentaires sur l'accès</ion-label>
+        <ion-textarea [(ngModel)]="access_comment" autosize></ion-textarea>
+    </ion-item>
+
+
+
+    <ion-card-header class="card-header card-header-md">Commentaires</ion-card-header>
+
+    <ion-item [ngClass]="{'input-need-data': title_nd == true}">
+        <ion-label color="wf" stacked>Titre de la sortie</ion-label>
+        <ion-input type="text" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Langue</ion-label>
+        <ion-select [(ngModel)]="lg">
+            <ion-option value="fr" selected="true">français</ion-option>
+            <ion-option value="it">Italien</ion-option>
+            <ion-option value="de">Allemand</ion-option>
+            <ion-option value="en">Anglais</ion-option>
+            <ion-option value="es">Espagnol</ion-option>
+            <ion-option value="ca">Catalan</ion-option>
+            <ion-option value="eu">Basque</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Participants membres</ion-label>
+        <ion-input type="text" placeholder="Rechercher..." [(ngModel)]="searchpt" (keyup)="getItemsPt($event)" (ionInput)="onInputPt($event)"></ion-input>
+    </ion-item>
+    <ion-list>
+        <ion-item *ngFor="let p of autocompletept">{{p.name}} <button class="add" ion-button clear item-right (click)="addUser(p)"><ion-icon name="add"></ion-icon></button></ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-item *ngFor="let p of ptlist">{{p.name}} <button class="remove" ion-button clear item-right (click)="rmUser(p)"><ion-icon name="remove"></ion-icon>
+            </button></ion-item>
+    </ion-list>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Participants</ion-label>
+        <ion-input type="text" [(ngModel)]="participants"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="wf" stacked>Nombre de participants</ion-label>
+        <ion-input type="number" [(ngModel)]="participant_count"></ion-input>
+    </ion-item>
+
+    <ion-item [ngClass]="{'input-need-data': description_nd == true}">
+        <ion-label color="wf" stacked>Commentaires personnels</ion-label>
+        <ion-textarea [(ngModel)]="description" placeholder="Laissez vos commentaires" autosize></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="wf" stacked>Complétude</ion-label>
+        <ion-select [(ngModel)]="quality">
+            <ion-option value="empty" selected="true">Vide</ion-option>
+            <ion-option value="draft">Ebauche</ion-option>
+            <ion-option value="medium">Moyen</ion-option>
+            <ion-option value="fine">Bon</ion-option>
+            <ion-option value="great">Excellent</ion-option>
+        </ion-select>
+    </ion-item>
+<div *ngIf="debugmode">
+      <ion-item>
+    <ion-textarea [(ngModel)]="debugdraft" autosize></ion-textarea>
+          </ion-item>
+    </div>
+    <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment>
+            <ion-segment-button (click)="saveDraft(true)" value="saveDraft">
+                <ion-icon name="archive"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button (click)="save()" value="save">
+                <ion-icon name="cloud-upload"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button>
+                <ion-icon name="trash" (click)="removeOuting(true)" value="remove"></ion-icon>
+            </ion-segment-button>
+
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

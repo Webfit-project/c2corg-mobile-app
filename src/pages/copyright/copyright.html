@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-navbar color="wf"  no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div role="main" class="wtop wtop-i">
+        <div class="center pd10 mt10">
+            <a class="ui-link"><div class="portrait"><div class="bgg"><img src="{{portrait}}" class="imgp"></div></div></a>
+        </div>
+        <div class="ui-content ui-max">
+            <div class="content-container">
+                <ion-item-divider color="light">Copyright</ion-item-divider>
+                <div class="text">
+                    <p class="center"><img src="assets/img/lwf.svg" class="logowf" /></p>
+                    <p>Copyright 2017 à Aujourd'hui <span (click)="gotoWf()" class="wf">Webfit SAS</span></p>
+                    <p (click)="gotoWf()" class="wf">https://www.webfit.fr</p>
+                    <p>&nbsp;</p>
+                    <p>Application développé sous licence Apache 2.0</p>
+                    <p>Envie de participer à l'amélioration de l'application ?</p>
+                    <p>Retrouvez les sources sur github : <span (click)="gotoGH()" class="gh">https://github.com/Webfit-project/c2corg-mobile-app</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

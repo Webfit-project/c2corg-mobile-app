@@ -1,0 +1,146 @@
+<ion-header>
+    <ion-navbar color="wf" no-shadow>
+        <button ion-button menuToggle>
+            <img src="assets/img/m.svg" />
+        </button>
+        <ion-title><img src="assets/img/l2.svg" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content color="grey">
+    <div class="ploader" *ngIf="loader"><ion-spinner></ion-spinner></div>
+    <div class="btreload" *ngIf="btreload && offlineData == false" (click)="reloadWaypoint()">Recharger le point de passage</div>
+    <div [ngSwitch]="topos" *ngIf="loader == false && btreload == false || offlineData">
+        <div *ngSwitchCase="'list'">
+            <ion-title><ng-container *ngIf="title_prefix != null">{{title_prefix}} : </ng-container> {{title}}</ion-title>
+            <ion-card class="imgbg" (click)="gotoSlide()" *ngIf="images.length > 0">
+                <img src="https://media.camptocamp.org/c2corg_active/{{images[0].filename}}" />
+                <div class="card-title"></div>
+                <div class="card-subtitle">{{images.length}} photo<ng-container *ngIf="images.length > 1">s</ng-container></div>
+            </ion-card>
+            <div class="btnol" *ngIf="offlineData == false">
+                <button ion-button full (click)='saveOffline()'>Activer la consultation hors ligne</button>
+            </div>
+            <div class="btnol" *ngIf="offlineData">
+                <button ion-button full (click)='rmOffline()'>Désactiver la consultation hors ligne</button>
+            </div>
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>Général</ion-col><ion-col width-66><div class="infoline" *ngIf="waypoint_type != null"><span class="title">Type de point de passage:</span> <span>{{typetostr(waypoint_type)}}</span></div>
+                    <div class="infoline" *ngIf="elevation != null"><span class="title">Altitude:</span> <span>{{elevation}}</span></div>
+                    <div class="infoline" *ngIf="rain_proof != null"><span class="title">Pluie:</span> <span>{{raintostr(rain_proof)}}</span></div>
+                    <div class="infoline" *ngIf="rock_types != null"><span class="title">Type de rocher:</span> <span *ngFor="let rt of rock_types">{{rt}}</span></div>
+                    <div class="infoline" *ngIf="children_proof != null"><span class="title">Enfants:</span> <span>{{childtostr(children_proof)}}</span></div>
+                    <div class="infoline"><span class="title">Complétude:</span> <span>{{qualitytostr(quality)}}</span></div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-33>Situation</ion-col><ion-col width-66><ul>
+                    <li *ngFor="let a of areas; let i=index" class="{{a.area_type}}">{{a.locales[idlg_loc[i]].title}}</li> 
+                    </ul>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="height_min != null || height_max != null || height_median != null">
+                    <ion-col width-33>Altitudes</ion-col><ion-col width-66>
+                    <ion-row *ngIf="height_min != null || height_max != null"><span class="title">Hauteur min/max :</span> <span>&nbsp;{{height_min}} / {{height_max}}</span></ion-row>
+                    <ion-row *ngIf="height_median != null"><span class="title">Hauteur moyenne:</span> <span>&nbsp;{{height_median}}</span></ion-row>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="climbing_rating_min != null || climbing_rating_min != null || climbing_rating_median != null || equipment_ratings != null">
+                    <ion-col width-33>Cotation</ion-col><ion-col width-66>
+                    <ion-row *ngIf="climbing_rating_min != null"><span class="title">Cotation maximale:</span> <span>&nbsp;{{climbing_rating_max}}</span></ion-row>
+                    <ion-row *ngIf="climbing_rating_min != null"><span class="title">Cotation minimale:</span> <span>&nbsp;{{climbing_rating_min}}</span></ion-row>
+                    <ion-row *ngIf="climbing_rating_median != null"><span class="title">Cotation médiane:</span> <span>&nbsp;{{climbing_rating_median}}</span></ion-row>
+                    <ion-row *ngIf="equipment_ratings != null"><span class="title">Qualité de l'équipement en place:</span> <span>&nbsp;{{equipment_ratings}}</span></ion-row>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="climbing_styles != null">
+                    <ion-col width-33>Style</ion-col><ion-col width-66>
+                    <ion-row><span class="title">Styles d'escalade:</span> <span *ngFor="let cs of climbing_styles">&nbsp;{{typeClimbtostr(cs)}}</span></ion-row>
+
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="best_periods != null || routes_quantity != null || access_time!= null">
+                    <ion-col width-33>Accès</ion-col><ion-col width-66>
+                    <ion-row *ngIf="routes_quantity != null"><span class="title">Nombre de voies:</span> <span>&nbsp;{{routes_quantity}}</span></ion-row>
+                    <ion-row *ngIf="access_time!= null"><span class="title">Temps d'accès:</span> <span>&nbsp;{{access_time}}</span></ion-row>
+                    <ion-row *ngIf="best_periods != null"><span class="title">Meilleures périodes:</span> <span *ngFor="let bp of best_periods" class="month">{{monthtostr(bp)}}</span></ion-row>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-33>Orientations</ion-col><ion-col width-66><svg class="orientation-svg" xmlns="http://www.w3.org/2000/svg" width="150" height="150" version="1.1" viewBox="0 0 454.00715 454.00714">
+                    <g>
+                        <path class="ori-e orientation-selected" d="m370.28 168.82-142.14 58.18 142.14 58.185h0.005l83.722-58.185z" *ngIf="orientations.E"></path>
+                        <path class="ori-e" d="m370.28 168.82-142.14 58.18 142.14 58.185h0.005l83.722-58.185z" *ngIf="orientations.E == false"></path>
+
+
+                        <text class="text-e" y="247.58344" x="350" font-size="60">E</text>
+                    </g>
+                    <g>
+                        <path class="ori-w orientation-selected" d="m83.727 168.82 142.14 58.18-142.14 58.185h-0.0046l-83.725-58.18z" *ngIf="orientations.W"></path>
+                        <path class="ori-w" d="m83.727 168.82 142.14 58.18-142.14 58.185h-0.0046l-83.725-58.18z" *ngIf="orientations.W == false"></path>
+                        <text class="text-w" y="247.58344" x="56" font-size="60">W</text>
+                    </g>
+                    <g>
+                        <path class="ori-s orientation-selected" d="m285.19 370.28-58.18-142.14-58.185 142.14v0.005l58.185 83.722z" *ngIf="orientations.S"></path>
+                        <path class="ori-s" d="m285.19 370.28-58.18-142.14-58.185 142.14v0.005l58.185 83.722z" *ngIf="orientations.S == false"></path>
+                        <text class="text-s" y="390.00714" x="206.10295" font-size="60">S</text>
+                    </g>
+                    <g>
+                        <path class="ori-n orientation-selected" d="m285.19 83.727-58.18 142.14-58.19-142.14v-0.005l58.19-83.725z" *ngIf="orientations.N"></path>
+                        <path class="ori-n" d="m285.19 83.727-58.18 142.14-58.19-142.14v-0.005l58.19-83.725z" *ngIf="orientations.N == false"></path>
+                        <text class="text-n" y="105.007141" x="205.0424" font-size="60">N</text>
+                    </g>
+                    <path class="ori-se orientation-selected" d="m369.46 287.17-141.65-59.371 59.368 141.65 0.002 0.002 100.34 18.058z" *ngIf="orientations.SE"></path>
+                    <path class="ori-se" d="m369.46 287.17-141.65-59.371 59.368 141.65 0.002 0.002 100.34 18.058z" *ngIf="orientations.SE == false"></path>
+                    <path class="ori-nw orientation-selected" d="m166.83 84.55 59.371 141.65-141.65-59.368-0.0032-0.002l-18.058-100.34z" *ngIf="orientations.NW"></path>
+                    <path class="ori-nw" d="m166.83 84.55 59.371 141.65-141.65-59.368-0.0032-0.002l-18.058-100.34z" *ngIf="orientations.NW == false"></path>
+                    <path class="ori-sw orientation-selected" d="m166.83 369.46 59.371-141.65-141.65 59.368-0.0032 0.002-18.058 100.34z" *ngIf="orientations.SW"></path>
+                    <path class="ori-sw" d="m166.83 369.46 59.371-141.65-141.65 59.368-0.0032 0.002-18.058 100.34z" *ngIf="orientations.SW == false"></path>
+                    <path class="ori-ne orientation-selected" d="m369.46 166.83-141.65 59.371 59.368-141.65 0.002-0.002 100.34-18.058z" *ngIf="orientations.NE"></path>
+                    <path class="ori-ne" d="m369.46 166.83-141.65 59.371 59.368-141.65 0.002-0.002 100.34-18.058z" *ngIf="orientations.NE == false"></path>
+                    </svg>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-33>Coordonnées GPS</ion-col><ion-col width-66>
+                    <ion-row><span class="title">Latitude:</span> <span>&nbsp;{{latitude}}</span></ion-row>
+                    <ion-row><span class="title">Longitude:</span> <span>&nbsp;{{longitude}}</span></ion-row>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-33>Cartes</ion-col><ion-col width-66><ul>
+                    <li *ngFor="let m of maps">{{m.editor}} - {{m.code}} - {{m.locales[0].title}}</li>
+                    </ul>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+            <ion-card *ngIf="description != null">
+                <ion-card-header>
+                    Description
+                </ion-card-header>
+                <ion-card-content>
+                    <summary class="document-summary" *ngIf="summary != null">
+                        <label><span>Résumé</span></label><br>
+
+                        <markdown [data]="summary"></markdown>
+                    </summary>
+                    <markdown [data]="description"></markdown>
+                </ion-card-content>
+            </ion-card>
+
+        </div>
+        <div *ngSwitchCase="'map'">
+            map
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="topos">
+            <ion-segment-button value="list" (click)='showMap()'>
+                Voir la carte
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

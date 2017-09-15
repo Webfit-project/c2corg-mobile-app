@@ -1,1 +1,2 @@
-# c2corg-mobile-app
+# Mobile App Camptocamp.org
+todo: make the doc

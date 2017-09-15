@@ -1,0 +1,138 @@
+page-add-outing ion-content ion-title {
+    text-align: center;
+    padding: 20px 0;
+}
+page-add-outing .boxsave {
+    width: 100%;
+    padding: 20px;
+}
+page-add-outing .btsave {
+    width: 100%;
+
+    background: rgba(169, 211, 97, 1);
+ 
+    text-align: center;
+    padding: 8px 0 6px 0;
+    font-size: 27px;
+}
+
+page-add-outing .label-md[stacked] {
+    font-size: 18px;
+}
+
+page-add-outing .item-block {
+    margin-bottom: 10px;
+        
+}
+page-add-outing .btright { font-size: 20px;}
+page-add-outing .input-has-focus .label-md[stacked] {
+    color: rgba(169, 211, 97, 1);
+}
+
+page-add-outing .item-md {
+    padding: 0 16px;
+}
+
+page-add-outing .item-md.item-input.input-has-focus .item-inner {
+    border-bottom-color: rgba(169, 211, 97, 1);
+    box-shadow: inset 0  -1px  0 0 rgba(169, 211, 97, 1);
+}
+
+page-add-outing .input-need-data .label-md[stacked] {
+    color: #e1484f;
+}
+
+page-add-outing .item-md.item-input.input-need-data .item-inner {
+    border-bottom-color: #e1484f;
+    box-shadow: inset 0  -1px  0 0 #e1484f;
+}
+
+page-add-outing .item-md ion-avatar[item-left], page-add-outing .item-md ion-thumbnail[item-left] {
+      padding: 8px 16px 8px 0;
+    font-size: 26px;
+    margin: 0px;
+    border-bottom: none;
+    color: rgba(255, 170, 69, 0.95);
+}
+
+page-add-outing .item-md ion-thumbnail {
+      min-width: 20px;
+    min-height: 20px;
+    
+}
+
+page-add-outing .list-md > .item-block:last-child .item-inner,page-add-outing  .list-md > .item-wrapper:last-child ion-label
+{
+    border-bottom: 1px solid #dedede;
+}
+
+page-add-outing .remove.button-clear-md {
+    color: #e1484f
+}
+page-add-outing .mb20 { margin: 10px 0 20px 0; }
+page-add-outing .btphoto { font-size: 30px;}
+
+page-add-outing .remove.button-clear-md, page-add-outing .add.button-clear-md {
+    background:transparent;
+}
+page-add-outing .ploader{
+    padding: 20px 0;
+    text-align: center;
+}
+
+page-add-outing .card-header-md {
+    padding: 10px;
+    color: #fff;
+}
+
+page-add-outing ion-card-header {
+    background: #A9D361;
+}
+
+
+.titleoi {
+    color: rgba(255, 170, 69, 0.95);
+    font-size: 18px;
+    padding: 0 16px;
+    margin-top: 20px;
+}
+page-add-outing .center {
+    text-align: center;
+    margin-bottom: 15px;
+}
+page-add-outing .button-md,page-add-outing .button-md.activated {
+    box-shadow: none;
+    background-color: rgba(255, 170, 69, 0.95);
+}
+
+page-add-outing .list-md .item-block .item-inner {
+    border-bottom: none;
+}
+page-add-outing .list-md ion-item {
+        border-bottom: 1px solid #dedede;
+    
+margin: 0 16px 10px 16px;
+    padding: 0px;
+    width: calc(100% - 32px);
+}
+
+page-add-outing .list-md ion-item  .label-md {  white-space: normal; }
+
+page-add-outing .toolbar-background-md {
+    background: #A9D361;
+}
+page-add-outing .segment-md .segment-button.segment-activated.noactivated {
+    color: #fff;
+    opacity: 1;
+}
+page-add-outing .segment-md .segment-button.activated, page-add-outing .segment-md .segment-button.segment-activated {
+    border: 0px;
+    color: #fff;
+    opacity: 1;
+}
+
+page-add-outing  .segment-md .segment-button {
+    border: 0px;
+    opacity: 1;
+    color: #fff;
+}
